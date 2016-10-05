@@ -1,7 +1,10 @@
 package dev42.ironlife;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
         EditText login = (EditText)findViewById(R.id.login);
         EditText senha = (EditText)findViewById(R.id.senha);
+        Button loginBtn = (Button)findViewById(R.id.btnlogin);
 
-//        login.getBackground().setColorFilter();
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, IntroActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

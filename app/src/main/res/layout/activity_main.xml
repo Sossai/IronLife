@@ -58,6 +58,7 @@
         android:buttonTint="@color/cortextobranco"/>
 
     <Button
+        android:id="@+id/btnlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
