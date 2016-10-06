@@ -3,4 +3,5 @@
     <string name="hint_login">Login</string>
     <string name="hint_senha">Senha</string>
     <string name="check_salvar_dados">Salvar dados</string>
+    <string name="barra_news">News</string>
 </resources>

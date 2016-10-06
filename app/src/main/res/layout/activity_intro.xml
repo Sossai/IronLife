@@ -5,12 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="dev42.ironlife.IntroActivity">
+    tools:context="dev42.ironlife.IntroActivity"
+    android:background="@color/backgroundescuro">
 
     <ImageView
+        android:id="@+id/imagemtoponews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/imgintro"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"/>
+
+    <RelativeLayout
+        android:id="@+id/barrarelativenews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagemtoponews">
+
+        <ImageView
+            android:id="@+id/barranews"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:foreground="@color/corbarras"
+            android:src="@drawable/backgroud" />
+
+        <TextView
+            android:id="@+id/textbarranews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/barra_news"
+            android:textSize="20sp"
+            android:textColor="@color/cortextobranco"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"/>
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="+"
+            android:textColor="@color/cortextobranco"
+            android:background="@color/corbarras"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listviewnews"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/barrarelativenews">
+    </ListView>
+
 </RelativeLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/backgroundescuro"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
+
+    <ImageView
+        android:id="@+id/imagemnews"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:src="@drawable/news_demo"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/titulonews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esta semana na Bungie"
+        android:layout_toRightOf="@id/imagemnews"
+        android:textColor="@color/cortextobranco"
+        android:textSize="22sp"
+        android:layout_marginTop="30dp"/>
+    <TextView
+        android:id="@+id/datanews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="29 de setembro de 2016 - 20:35"
+        android:textColor="@color/cortextobranco"
+        android:layout_below="@id/titulonews"
+        android:layout_toRightOf="@id/imagemnews"/>
+</RelativeLayout>
