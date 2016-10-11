@@ -1,4 +1,4 @@
-package dev42.ironlife;
+package dev42.ironlife.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev42.ironlife.R;
 import dev42.ironlife.adapters.NewsAdapter;
 import dev42.ironlife.model.News;
 
@@ -24,7 +25,6 @@ public class IntroActivity extends AppCompatActivity {
         List<News> listaNews = simulaListaNews();
 
         Integer tam = listaNews.size();
-        Log.e("lista", tam.toString());
         NewsAdapter adapter = new NewsAdapter(listaNews, this);
         listaN.setAdapter(adapter);
     }

@@ -4,4 +4,5 @@
     <string name="hint_senha">Senha</string>
     <string name="check_salvar_dados">Salvar dados</string>
     <string name="barra_news">News</string>
+    <string name="barra_eventos">Eventos</string>
 </resources>

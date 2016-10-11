@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/backgroundescuro"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
+
+    <ImageView
+        android:id="@+id/imagemevento"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:src="@drawable/raid_demo"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"/>
+    <TextView
+        android:id="@+id/tituloevento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escolinha 1"
+        android:layout_toRightOf="@id/imagemevento"
+        android:textColor="@color/cortextobranco"
+        android:textSize="22sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/datainiioevento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inicio : 10/10/2016 - 20:35"
+        android:textColor="@color/cortextobranco"
+        android:layout_below="@id/tituloevento"
+        android:layout_toRightOf="@id/imagemevento"
+        android:layout_marginLeft="15dp"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/dataencerramentoevento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fim : 10/10/2016 - 20:35"
+        android:textColor="@color/cortextobranco"
+        android:layout_below="@id/datainiioevento"
+        android:layout_toRightOf="@id/imagemevento"
+        android:layout_marginLeft="15dp"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/responsavelevento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Criador : Sossai"
+        android:textColor="@color/cortextobranco"
+        android:layout_below="@id/dataencerramentoevento"
+        android:layout_toRightOf="@id/imagemevento"
+        android:layout_marginLeft="15dp"
+        android:textSize="12sp"/>
+
+    <ImageView
+        android:id="@+id/ghost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ghost"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
