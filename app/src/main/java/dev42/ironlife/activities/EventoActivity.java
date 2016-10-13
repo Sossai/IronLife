@@ -1,6 +1,8 @@
 package dev42.ironlife.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -22,25 +25,31 @@ import java.util.List;
 
 import dev42.ironlife.R;
 import dev42.ironlife.adapters.EventoAdapter;
+import dev42.ironlife.converters.EventoConverter;
+import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
+import dev42.ironlife.tasks.GetDadosTask;
 
 import static android.R.attr.format;
 
-public class EventoActivity extends AppCompatActivity {
+public class EventoActivity extends AppCompatActivity implements RetornoDelegate {
 
-    List<Evento> eventos;
-    ListView listView;
+    private List<Evento> eventos;
+    private ListView listView;
+    private ProgressDialog progressDialog;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
 
-        eventos = simulaEventos();
-
         listView = (ListView)findViewById(R.id.listvieweventos);
-        EventoAdapter adapter = new EventoAdapter(eventos, this);
-        listView.setAdapter(adapter);
+
+        //eventos = simulaEventos();
+        carregaLista();
+        //EventoAdapter adapter = new EventoAdapter(eventos, this);
+        //listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
         //  **  Chamo o ContextMenu com 1 clique    **
@@ -59,6 +68,7 @@ public class EventoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
     }
 
@@ -127,4 +137,35 @@ public class EventoActivity extends AppCompatActivity {
 
 
     }
-}
+
+    public void carregaLista(){
+        progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
+        String url = getString(R.string.url_lista_eventos);
+
+        url += 1;   //  **  Id do usuario logado    **
+        GetDadosTask task = new GetDadosTask(this, url);
+        task.execute();
+    }
+
+    @Override
+    public void LidaComRetorno(String retorno) {
+        progressDialog.dismiss();
+        EventoConverter converter = new EventoConverter();
+        eventos = converter.converte(retorno);
+
+        if(eventos != null){
+            EventoAdapter adapter = new EventoAdapter(eventos, this);
+            listView.setAdapter(adapter);
+        }else
+            Toast.makeText(this, "Não foram encontrados Eventos", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void LidaComErro(String erro) {
+        progressDialog.dismiss();
+        Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
+    }
+
+
+
+    }

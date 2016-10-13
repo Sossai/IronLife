@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -32,6 +33,11 @@ public class AddEventoActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_evento);
+
+        //  **  Action Bar return   **
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         dataInicio = (EditText)findViewById(R.id.datainicio);
         dataFim = (EditText)findViewById(R.id.datafim);
@@ -151,5 +157,16 @@ public class AddEventoActivity extends AppCompatActivity{
         timePickerDialog.setCancelable(true);
         timePickerDialog.setCanceledOnTouchOutside(true);
         timePickerDialog.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        switch (menuItem.getItemId()){
+            case android.R.id.home:
+                //finish();
+                super.onBackPressed();
+                return true;
+        }
+        return true;
     }
 }

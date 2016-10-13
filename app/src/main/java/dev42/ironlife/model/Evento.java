@@ -16,11 +16,13 @@ public class Evento {
     private String horaInicio;
     private String dataEncerramento;
     private String horaEncerramento;
+    private Integer idResponsavel;
     private String responsavel;
     private Integer idTipoEvento;
     private String descricaoTipoEvento;
     private String imagem;
     private boolean usuarioRegistrado;
+
 
     public Integer getId() {
         return id;
@@ -116,5 +118,13 @@ public class Evento {
 
     public void setUsuarioRegistrado(boolean usuarioRegistrado) {
         this.usuarioRegistrado = usuarioRegistrado;
+    }
+
+    public Integer getIdResponsavel() {
+        return idResponsavel;
+    }
+
+    public void setIdResponsavel(Integer idResponsavel) {
+        this.idResponsavel = idResponsavel;
     }
 }

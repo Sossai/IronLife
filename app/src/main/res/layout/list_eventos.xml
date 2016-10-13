@@ -13,6 +13,14 @@
         android:src="@drawable/raid_demo"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"/>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="60dp" />
+
     <TextView
         android:id="@+id/tituloevento"
         android:layout_width="wrap_content"

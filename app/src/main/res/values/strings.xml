@@ -5,4 +5,6 @@
     <string name="check_salvar_dados">Salvar dados</string>
     <string name="barra_news">News</string>
     <string name="barra_eventos">Eventos</string>
+    <string name="url_lista_eventos">http://www.dev42.com.br/ironlife/app/rest/listar_eventos/</string>
+    <string name="url_lista_eventos_local">http://10.1.1.105/ironlife/app/rest/listar_eventos/</string>
 </resources>

@@ -2,12 +2,17 @@ package dev42.ironlife.adapters;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -46,7 +51,7 @@ public class EventoAdapter extends BaseAdapter {
             holder = (ViewHolder)layout.getTag();
         }
 
-        holder.imagem.setImageResource(R.drawable.raid_demo);
+        //holder.imagem.setImageResource(R.drawable.raid_demo);
         holder.titulo.setText(evento.getTitulo());
         String txt = "Inicio : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
         holder.inicio.setText(txt);
@@ -60,6 +65,10 @@ public class EventoAdapter extends BaseAdapter {
         }else
             holder.ghost.setVisibility(GONE);
 
+        Picasso.with(this.activity)
+                .load(evento.getImagem())
+                //.fit()
+                .into(holder.imagem, new VerificadorRetorno(holder.progress));
         return layout;
     }
 
@@ -85,6 +94,7 @@ public class EventoAdapter extends BaseAdapter {
         TextView fim;
         TextView responsavel;
         ImageView ghost;
+        ProgressBar progress;
 
         public ViewHolder(View view){
             this.imagem = (ImageView)view.findViewById(R.id.imagemevento);
@@ -93,6 +103,25 @@ public class EventoAdapter extends BaseAdapter {
             this.fim = (TextView)view.findViewById(R.id.dataencerramentoevento);
             this.responsavel = (TextView)view.findViewById(R.id.responsavelevento);
             this.ghost = (ImageView)view.findViewById(R.id.ghost);
+            this.progress = (ProgressBar) view.findViewById(R.id.progress);
+        }
+    }
+
+    class VerificadorRetorno implements Callback {
+        private ProgressBar holder;
+
+        public VerificadorRetorno(ProgressBar holder){
+            this.holder = holder;
+        }
+
+        @Override
+        public void onSuccess() {
+            holder.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError() {
+            holder.setVisibility(View.GONE);
         }
     }
 
