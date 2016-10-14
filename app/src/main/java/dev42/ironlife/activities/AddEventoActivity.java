@@ -1,5 +1,6 @@
 package dev42.ironlife.activities;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -13,21 +14,28 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import dev42.ironlife.R;
+import dev42.ironlife.interfaces.RetornoDelegate;
+import dev42.ironlife.tasks.GetDadosTask;
 
-public class AddEventoActivity extends AppCompatActivity{
+public class AddEventoActivity extends AppCompatActivity implements RetornoDelegate {
     final Context context = this;
-    EditText dataInicio, dataFim, horaInicio, horaFim, tipo;
+    final Activity activity = this;
+    private EditText titulo, dataInicio, dataFim, horaInicio, horaFim, tipo, idtipo;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private Button idconfirmar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +47,15 @@ public class AddEventoActivity extends AppCompatActivity{
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        titulo = (EditText)findViewById(R.id.addtitulo);
         dataInicio = (EditText)findViewById(R.id.datainicio);
         dataFim = (EditText)findViewById(R.id.datafim);
         horaInicio = (EditText)findViewById(R.id.horainicio);
         horaFim = (EditText)findViewById(R.id.horafim);
         tipo = (EditText)findViewById(R.id.tipo);
+        idconfirmar = (Button)findViewById(R.id.idconfirmar);
+        idtipo = (EditText)findViewById(R.id.idtipo);
+
 
 //        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
 //        adapter.add("Raid");
@@ -105,6 +117,28 @@ public class AddEventoActivity extends AppCompatActivity{
             }
         });
 
+        idconfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enviaDados();
+            }
+        });
+    }
+
+    void enviaDados(){
+        String url = getString(R.string.url_cria_evento);
+        HashMap<String, String> postDataParams = new HashMap<>();
+        postDataParams.put("descricao",titulo.getText().toString());
+        postDataParams.put("datainicio",dataInicio.getText().toString());
+        postDataParams.put("horainicio",horaInicio.getText().toString());
+        postDataParams.put("dataencerramento",dataFim.getText().toString());
+        postDataParams.put("horaencerramento",horaFim.getText().toString());
+        postDataParams.put("idtipoevento","1");         //  **  Alterar **
+        postDataParams.put("idusuariocriador","1");      //  **  Alterar **
+        postDataParams.put("idusuarioresponsavel","1");  //  **  Alterar **
+
+        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+        task.execute();
     }
 
     private void pegaData(final String campo){
@@ -168,5 +202,21 @@ public class AddEventoActivity extends AppCompatActivity{
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void LidaComErro(String erro) {
+        Log.e("Erro Criar Evento", erro);
+        Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void LidaComRetorno(String retorno) {
+        Log.e("ret", retorno);
+        if(retorno.trim().equals("SUCESSO")){
+            Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+            finish();
+        }else
+            Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
     }
 }

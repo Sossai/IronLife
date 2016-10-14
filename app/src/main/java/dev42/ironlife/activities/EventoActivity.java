@@ -32,12 +32,12 @@ import dev42.ironlife.tasks.GetDadosTask;
 
 import static android.R.attr.format;
 
-public class EventoActivity extends AppCompatActivity implements RetornoDelegate {
+public class EventoActivity extends AppCompatActivity implements RetornoDelegate, SwipeRefreshLayout.OnRefreshListener {
 
     private List<Evento> eventos;
     private ListView listView;
     private ProgressDialog progressDialog;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         setContentView(R.layout.activity_evento);
 
         listView = (ListView)findViewById(R.id.listvieweventos);
-
-        //eventos = simulaEventos();
         carregaLista();
-        //EventoAdapter adapter = new EventoAdapter(eventos, this);
-        //listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
         //  **  Chamo o ContextMenu com 1 clique    **
@@ -69,59 +65,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             }
         });
 
-
-    }
-
-    private List<Evento> simulaEventos(){
-        List<Evento> listEventos = new ArrayList<>();
-
-        Calendar c = Calendar.getInstance();
-        String hora = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-
-        Evento evento = new Evento();
-        evento.setId(1);
-        evento.setTitulo("Ecolinha 1");
-        evento.setDataInicio(data);
-        evento.setHoraInicio(hora);
-        evento.setDataEncerramento(data);
-        evento.setHoraEncerramento(hora);
-        evento.setResponsavel("Sossai");
-        listEventos.add(evento);
-
-        evento = new Evento();
-        evento.setId(2);
-        evento.setTitulo("Ecolinha 2");
-        evento.setDataInicio(data);
-        evento.setHoraInicio(hora+1);
-        evento.setDataEncerramento(data);
-        evento.setHoraEncerramento(hora);
-        evento.setResponsavel("SrMassacre");
-        evento.setUsuarioRegistrado(true);
-
-        listEventos.add(evento);
-
-        evento = new Evento();
-        evento.setId(3);
-        evento.setTitulo("Raid Oficial");
-        evento.setDataInicio(data);
-        evento.setHoraInicio(hora+2);
-        evento.setDataEncerramento(data);
-        evento.setHoraEncerramento(hora);
-        evento.setResponsavel("diegotx9EUA");
-        listEventos.add(evento);
-
-        evento = new Evento();
-        evento.setId(4);
-        evento.setTitulo("Raid Oficial 2");
-        evento.setDataInicio(data);
-        evento.setHoraInicio(hora+2);
-        evento.setDataEncerramento(data);
-        evento.setHoraEncerramento(hora);
-        evento.setResponsavel("diegotx9EUA");
-        listEventos.add(evento);
-
-        return listEventos;
+        swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
+        swipe.setOnRefreshListener(this);
     }
 
     @Override
@@ -135,7 +80,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         MenuItem Cancelar = menu.add("Cancelar Inscrição");
         MenuItem Sobre = menu.add("Sobre");
 
-
     }
 
     public void carregaLista(){
@@ -143,7 +87,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_lista_eventos);
 
         url += 1;   //  **  Id do usuario logado    **
-        GetDadosTask task = new GetDadosTask(this, url);
+        GetDadosTask task = new GetDadosTask(this, url, null, "GET");
         task.execute();
     }
 
@@ -166,6 +110,11 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
     }
 
-
+    @Override
+    public void onRefresh() {
+        carregaLista();
+        this.swipe.setRefreshing(false);
+        this.swipe.clearAnimation();
 
     }
+}

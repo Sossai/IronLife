@@ -88,8 +88,14 @@
         android:backgroundTint="@color/cortextobranco"
         android:focusable="false"/>
 
+    <EditText
+        android:id="@+id/idtipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
     <Button
-        android:id="@+id/idconfirmr"
+        android:id="@+id/idconfirmar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
