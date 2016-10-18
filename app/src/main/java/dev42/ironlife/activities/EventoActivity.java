@@ -38,6 +38,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     private ListView listView;
     private ProgressDialog progressDialog;
     SwipeRefreshLayout swipe;
+    private Boolean progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         setContentView(R.layout.activity_evento);
 
         listView = (ListView)findViewById(R.id.listvieweventos);
+        progress = true;
         carregaLista();
 
         registerForContextMenu(listView);
@@ -83,9 +85,10 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     }
 
     public void carregaLista(){
-        progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
-        String url = getString(R.string.url_lista_eventos);
+        if(progress)
+            progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
 
+        String url = getString(R.string.url_lista_eventos);
         url += 1;   //  **  Id do usuario logado    **
         GetDadosTask task = new GetDadosTask(this, url, null, "GET");
         task.execute();
@@ -93,7 +96,11 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     @Override
     public void LidaComRetorno(String retorno) {
-        progressDialog.dismiss();
+        if(progress)
+            progressDialog.dismiss();
+        this.swipe.setRefreshing(false);
+        this.swipe.clearAnimation();
+
         EventoConverter converter = new EventoConverter();
         eventos = converter.converte(retorno);
 
@@ -106,15 +113,17 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     @Override
     public void LidaComErro(String erro) {
-        progressDialog.dismiss();
+        if(progress)
+            progressDialog.dismiss();
+        this.swipe.setRefreshing(false);
+        this.swipe.clearAnimation();
+
         Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onRefresh() {
+        progress = false;
         carregaLista();
-        this.swipe.setRefreshing(false);
-        this.swipe.clearAnimation();
-
     }
 }

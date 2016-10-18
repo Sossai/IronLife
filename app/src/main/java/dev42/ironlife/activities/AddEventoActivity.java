@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import dev42.ironlife.R;
+import dev42.ironlife.adapters.TipoEventoAdapter;
+import dev42.ironlife.converters.TipoEventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
+import dev42.ironlife.model.TipoEvento;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class AddEventoActivity extends AppCompatActivity implements RetornoDelegate {
@@ -36,6 +40,9 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     private EditText titulo, dataInicio, dataFim, horaInicio, horaFim, tipo, idtipo;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Button idconfirmar;
+    private Integer tipoRetorno;
+    private List<TipoEvento> listTipoEventos;
+    private TipoEvento tipoEventoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         setContentView(R.layout.activity_add_evento);
 
         //  **  Action Bar return   **
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -56,10 +63,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         idconfirmar = (Button)findViewById(R.id.idconfirmar);
         idtipo = (EditText)findViewById(R.id.idtipo);
 
-
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-//        adapter.add("Raid");
-//        adapter.add("Escolinha");
+        recuperarListaTipoEvento();
 
         dataInicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +101,12 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
                 builder.setTitle("Tipo");
 
                 final ListView modeList = new ListView(context);
-                String[] stringArray = new String[] { "Escolinha", "Raid" };
-                ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
-                modeList.setAdapter(modeAdapter);
+//                String[] stringArray = new String[] { "Escolinha", "Raid" };
+//                ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+//                modeList.setAdapter(modeAdapter);
+
+                TipoEventoAdapter adapter = new TipoEventoAdapter(listTipoEventos, activity);
+                modeList.setAdapter(adapter);
 
                 builder.setView(modeList);
                 final Dialog dialog = builder.create();
@@ -110,7 +117,9 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
                 modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        tipo.setText(modeList.getItemAtPosition(position).toString());
+                        //tipo.setText(modeList.getItemAtPosition(position).toString());
+                        tipoEventoSelecionado = (TipoEvento) modeList.getItemAtPosition(position);
+                        tipo.setText(tipoEventoSelecionado.getDescricao());
                         dialog.dismiss();
                     }
                 });
@@ -125,7 +134,15 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         });
     }
 
+    void recuperarListaTipoEvento(){
+        tipoRetorno = 2;
+        String url = getString(R.string.url_lista_tipo_evento);
+        GetDadosTask task = new GetDadosTask(this, url,null, "GET");
+        task.execute();
+    }
+
     void enviaDados(){
+        tipoRetorno = 1;
         String url = getString(R.string.url_cria_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("descricao",titulo.getText().toString());
@@ -133,12 +150,59 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         postDataParams.put("horainicio",horaInicio.getText().toString());
         postDataParams.put("dataencerramento",dataFim.getText().toString());
         postDataParams.put("horaencerramento",horaFim.getText().toString());
-        postDataParams.put("idtipoevento","1");         //  **  Alterar **
+        //postDataParams.put("idtipoevento","1");         //  **  Alterar **
+        postDataParams.put("idtipoevento",tipoEventoSelecionado.getId().toString());         //  **  Alterar **
         postDataParams.put("idusuariocriador","1");      //  **  Alterar **
         postDataParams.put("idusuarioresponsavel","1");  //  **  Alterar **
 
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        switch (menuItem.getItemId()){
+            case android.R.id.home:
+                //finish();
+                super.onBackPressed();
+                return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void LidaComErro(String erro) {
+        //Log.e("Erro Criar Evento", erro);
+
+        switch (tipoRetorno){
+            case 1:
+                Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Toast.makeText( this, "Falha ao recuperar Tipo de Evento.", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    @Override
+    public void LidaComRetorno(String retorno) {
+        //Log.e("Sucesso tipo", tipoRetorno.toString());
+
+        switch (tipoRetorno){
+            case 1:
+                if(retorno.trim().equals("SUCESSO")){
+                    Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                    finish();
+                }else
+                    Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Log.e("retorno 2", retorno);
+                TipoEventoConverter converter = new TipoEventoConverter();
+                listTipoEventos = converter.converte(retorno);
+                break;
+        }
+
     }
 
     private void pegaData(final String campo){
@@ -175,48 +239,21 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        switch (campo){
-                            case "INICIO":
-                                horaInicio.setText(hourOfDay + ":" + minute);
-                                break;
-                            case "FIM":
-                                horaFim.setText(hourOfDay + ":" + minute);
-                                break;
-                        }
-                    }
-                }, mHour, mMinute, false);
+                switch (campo){
+                    case "INICIO":
+                        horaInicio.setText(hourOfDay + ":" + minute);
+                        break;
+                    case "FIM":
+                        horaFim.setText(hourOfDay + ":" + minute);
+                        break;
+                }
+            }
+        }, mHour, mMinute, false);
         timePickerDialog.setCancelable(true);
         timePickerDialog.setCanceledOnTouchOutside(true);
         timePickerDialog.show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        switch (menuItem.getItemId()){
-            case android.R.id.home:
-                //finish();
-                super.onBackPressed();
-                return true;
-        }
-        return true;
-    }
-
-    @Override
-    public void LidaComErro(String erro) {
-        Log.e("Erro Criar Evento", erro);
-        Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void LidaComRetorno(String retorno) {
-        Log.e("ret", retorno);
-        if(retorno.trim().equals("SUCESSO")){
-            Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-        }else
-            Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
     }
 }

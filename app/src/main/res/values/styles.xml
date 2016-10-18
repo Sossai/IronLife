@@ -9,8 +9,8 @@
 
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">@color/backgroundescuro</item>
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/azulmedio</item>
     </style>
 
 

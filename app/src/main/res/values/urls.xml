@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="url_lista_eventos_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/listar_eventos/</item>
+    <item name="url_cria_evento_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/criar_evento/</item>
+    <item name="url_lista_tipo_evento_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/listar_tipos_eventos/</item>
+
+    <item name="url_lista_eventos" type="string">http://10.1.1.105/ironlife/app/rest/listar_eventos/</item>
+    <item name="url_cria_evento" type="string">http://10.1.1.105/ironlife/app/rest/criar_evento/</item>
+    <item name="url_lista_tipo_evento" type="string">http://10.1.1.105/ironlife/app/rest/listar_tipos_eventos/</item>
+</resources>

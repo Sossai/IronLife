@@ -6,7 +6,7 @@ package dev42.ironlife.model;
 
 public class TipoEvento {
     private Integer id;
-    private String descicao;
+    private String descricao;
     private String imagem;
 
     public Integer getId() {
@@ -17,12 +17,12 @@ public class TipoEvento {
         this.id = id;
     }
 
-    public String getDescicao() {
-        return descicao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescicao(String descicao) {
-        this.descicao = descicao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getImagem() {
