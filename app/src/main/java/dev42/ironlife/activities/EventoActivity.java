@@ -144,7 +144,11 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 break;
 
             case 2:
-                Log.e("Sucesso 2", retorno);
+                //Log.e("Sucesso 2", retorno);
+                if(retorno.trim().equals("SUCESSO"))
+                    Toast.makeText( this, "Seja bem vindo Guardião!", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText( this, "Lamento Guardião, não foi possível cadastra-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -162,7 +166,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
                 break;
             case 2:
-                Log.e("Erro 2", erro);
+                Toast.makeText( this, "Lamento Guardião, não foi possível cadastra-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
     }
