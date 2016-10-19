@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import dev42.ironlife.R;
@@ -30,6 +31,7 @@ import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
 import dev42.ironlife.tasks.GetDadosTask;
 
+import static android.R.attr.breadCrumbShortTitle;
 import static android.R.attr.format;
 
 public class EventoActivity extends AppCompatActivity implements RetornoDelegate, SwipeRefreshLayout.OnRefreshListener {
@@ -37,8 +39,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     private List<Evento> eventos;
     private ListView listView;
     private ProgressDialog progressDialog;
-    SwipeRefreshLayout swipe;
+    private SwipeRefreshLayout swipe;
     private Boolean progress;
+    private Integer tipoRetorno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +76,44 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+//        super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-
-        Evento eventoSelecionado = (Evento)listView.getItemAtPosition(info.position);
+        final Evento eventoSelecionado = (Evento)listView.getItemAtPosition(info.position);
 
         MenuItem Inscrever = menu.add("Inscrever");
         MenuItem Cancelar = menu.add("Cancelar Inscrição");
         MenuItem Sobre = menu.add("Sobre");
 
+        if(eventoSelecionado.isUsuarioRegistrado()){
+            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(true);
+        }
+        else{
+            menu.getItem(0).setVisible(true);
+            menu.getItem(1).setVisible(false);
+        }
+
+        Inscrever.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                inscreverEvento(eventoSelecionado);
+                return false;
+            }
+        });
+    }
+
+    public void inscreverEvento(Evento evento){
+        tipoRetorno = 2;
+        String url = getString(R.string.url_inscrever_evento);
+        HashMap<String, String> postDataParams = new HashMap<>();
+        postDataParams.put("idevento",evento.getId().toString());
+        postDataParams.put("idusuario","1");    //  **  Alterar ** Id logado
+        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+        task.execute();
     }
 
     public void carregaLista(){
+        tipoRetorno = 1;
         if(progress)
             progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
 
@@ -98,27 +127,44 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     public void LidaComRetorno(String retorno) {
         if(progress)
             progressDialog.dismiss();
-        this.swipe.setRefreshing(false);
-        this.swipe.clearAnimation();
 
-        EventoConverter converter = new EventoConverter();
-        eventos = converter.converte(retorno);
+        switch (tipoRetorno){
+            case 1:
+                this.swipe.setRefreshing(false);
+                this.swipe.clearAnimation();
 
-        if(eventos != null){
-            EventoAdapter adapter = new EventoAdapter(eventos, this);
-            listView.setAdapter(adapter);
-        }else
-            Toast.makeText(this, "Não foram encontrados Eventos", Toast.LENGTH_LONG).show();
+                EventoConverter converter = new EventoConverter();
+                eventos = converter.converte(retorno);
+
+                if(eventos != null){
+                    EventoAdapter adapter = new EventoAdapter(eventos, this);
+                    listView.setAdapter(adapter);
+                }else
+                    Toast.makeText(this, "Não foram encontrados Eventos", Toast.LENGTH_LONG).show();
+                break;
+
+            case 2:
+                Log.e("Sucesso 2", retorno);
+                break;
+        }
     }
 
     @Override
     public void LidaComErro(String erro) {
         if(progress)
             progressDialog.dismiss();
-        this.swipe.setRefreshing(false);
-        this.swipe.clearAnimation();
 
-        Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
+        switch (tipoRetorno){
+            case 1:
+                this.swipe.setRefreshing(false);
+                this.swipe.clearAnimation();
+
+                Toast.makeText(this, "Erro ao buscar eventos.", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Log.e("Erro 2", erro);
+                break;
+        }
     }
 
     @Override

@@ -7,4 +7,5 @@
     <item name="url_lista_eventos" type="string">http://10.1.1.105/ironlife/app/rest/listar_eventos/</item>
     <item name="url_cria_evento" type="string">http://10.1.1.105/ironlife/app/rest/criar_evento/</item>
     <item name="url_lista_tipo_evento" type="string">http://10.1.1.105/ironlife/app/rest/listar_tipos_eventos/</item>
+    <item name="url_inscrever_evento" type="string">http://10.1.1.105/ironlife/app/eventousuario/adicionar/</item>
 </resources>
