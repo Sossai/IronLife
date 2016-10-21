@@ -142,6 +142,8 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     }
 
     void enviaDados(){
+        Log.e("enviadados", "enviadados");
+
         tipoRetorno = 1;
         String url = getString(R.string.url_cria_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
@@ -172,11 +174,11 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     @Override
     public void LidaComErro(String erro) {
-        //Log.e("Erro Criar Evento", erro);
+        Log.e("Erro Criar Evento", erro);
 
         switch (tipoRetorno){
             case 1:
-                Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                Toast.makeText( this, "Falha ao criar Evento..", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 Toast.makeText( this, "Falha ao recuperar Tipo de Evento.", Toast.LENGTH_LONG).show();
@@ -186,7 +188,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     @Override
     public void LidaComRetorno(String retorno) {
-        //Log.e("Sucesso tipo", tipoRetorno.toString());
+        Log.e("Sucesso tipo",retorno);
 
         switch (tipoRetorno){
             case 1:
@@ -197,7 +199,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
                     Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
                 break;
             case 2:
-                Log.e("retorno 2", retorno);
+                Log.e("Puta merda 3", retorno);
                 TipoEventoConverter converter = new TipoEventoConverter();
                 listTipoEventos = converter.converte(retorno);
                 break;

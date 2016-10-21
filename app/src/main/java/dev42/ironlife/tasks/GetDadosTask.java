@@ -3,6 +3,7 @@ package dev42.ironlife.tasks;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -28,6 +29,7 @@ public class GetDadosTask extends AsyncTask<Object, Object, String> {
     @Override
     protected String doInBackground(Object... params) {
         //SystemClock.sleep(7000);
+
         String resposta = null;
         WebClient webclient;
         try{

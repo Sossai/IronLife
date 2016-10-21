@@ -51,7 +51,6 @@ public class EventoAdapter extends BaseAdapter {
             holder = (ViewHolder)layout.getTag();
         }
 
-        //holder.imagem.setImageResource(R.drawable.raid_demo);
         holder.titulo.setText(evento.getTitulo());
         String txt = "Inicio : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
         holder.inicio.setText(txt);
@@ -62,13 +61,16 @@ public class EventoAdapter extends BaseAdapter {
 
         if(evento.isUsuarioRegistrado()){
             holder.ghost.setImageResource(R.drawable.ic_ghost);
-        }else
+            holder.ghost.setVisibility(View.VISIBLE);
+        }else {
             holder.ghost.setVisibility(GONE);
+        }
 
         Picasso.with(this.activity)
                 .load(evento.getImagem())
                 //.fit()
                 .into(holder.imagem, new VerificadorRetorno(holder.progress));
+
         return layout;
     }
 

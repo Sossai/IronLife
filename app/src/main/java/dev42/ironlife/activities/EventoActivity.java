@@ -42,6 +42,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     private SwipeRefreshLayout swipe;
     private Boolean progress;
     private Integer tipoRetorno;
+    private EventoAdapter adapter;
+    private Integer posicaoEventoSelecionado;
+    private Evento eventoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +81,12 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //        super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-        final Evento eventoSelecionado = (Evento)listView.getItemAtPosition(info.position);
+        posicaoEventoSelecionado = info.position;
+        eventoSelecionado = (Evento)listView.getItemAtPosition(info.position);
 
-        MenuItem Inscrever = menu.add("Inscrever");
-        MenuItem Cancelar = menu.add("Cancelar Inscrição");
-        MenuItem Sobre = menu.add("Sobre");
+        MenuItem inscrever = menu.add("Inscrever");
+        MenuItem cancelar = menu.add("Cancelar Inscrição");
+        MenuItem sobre = menu.add("Sobre");
 
         if(eventoSelecionado.isUsuarioRegistrado()){
             menu.getItem(0).setVisible(false);
@@ -93,10 +97,21 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             menu.getItem(1).setVisible(false);
         }
 
-        Inscrever.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        inscrever.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 inscreverEvento(eventoSelecionado);
+                return false;
+            }
+        });
+
+        cancelar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                cancelarEvento(eventoSelecionado);
+
+
                 return false;
             }
         });
@@ -105,6 +120,16 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     public void inscreverEvento(Evento evento){
         tipoRetorno = 2;
         String url = getString(R.string.url_inscrever_evento);
+        HashMap<String, String> postDataParams = new HashMap<>();
+        postDataParams.put("idevento",evento.getId().toString());
+        postDataParams.put("idusuario","1");    //  **  Alterar ** Id logado
+        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+        task.execute();
+    }
+
+    public void cancelarEvento(Evento evento){
+        tipoRetorno = 3;
+        String url = getString(R.string.url_cancelar_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
         postDataParams.put("idusuario","1");    //  **  Alterar ** Id logado
@@ -137,7 +162,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 eventos = converter.converte(retorno);
 
                 if(eventos != null){
-                    EventoAdapter adapter = new EventoAdapter(eventos, this);
+                    adapter = new EventoAdapter(eventos, this);
                     listView.setAdapter(adapter);
                 }else
                     Toast.makeText(this, "Não foram encontrados Eventos", Toast.LENGTH_LONG).show();
@@ -145,10 +170,38 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
             case 2:
                 //Log.e("Sucesso 2", retorno);
-                if(retorno.trim().equals("SUCESSO"))
+                if(retorno.trim().equals("SUCESSO")){
+
+                    //  **  Remove o evento e insere uma atualizado na lista    **
+                    Evento eventoAlterado = eventoSelecionado;
+                    eventoAlterado.setUsuarioRegistrado(true);
+
+                    eventos.remove(eventoSelecionado);
+                    eventos.add(posicaoEventoSelecionado, eventoAlterado);
+                    adapter.notifyDataSetChanged();
+
                     Toast.makeText( this, "Seja bem vindo Guardião!", Toast.LENGTH_LONG).show();
+                }
                 else
                     Toast.makeText( this, "Lamento Guardião, não foi possível cadastra-lo.", Toast.LENGTH_LONG).show();
+                break;
+
+            case 3:
+                Log.e("Sucesso 3", retorno);
+                if(retorno.trim().equals("SUCESSO")) {
+
+                    //  **  Remove o evento e insere uma atualizado na lista    **
+                    Evento eventoAlterado = eventoSelecionado;
+                    eventoAlterado.setUsuarioRegistrado(false);
+
+                    eventos.remove(eventoSelecionado);
+                    eventos.add(posicaoEventoSelecionado, eventoAlterado);
+                    adapter.notifyDataSetChanged();
+
+                    Toast.makeText(this, "Adeus Guardião!", Toast.LENGTH_LONG).show();
+                }
+                else
+                    Toast.makeText( this, "Lamento Guardião, não foi possível remove-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -167,6 +220,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 break;
             case 2:
                 Toast.makeText( this, "Lamento Guardião, não foi possível cadastra-lo.", Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                Toast.makeText( this, "Lamento Guardião, não foi possível remove-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
     }

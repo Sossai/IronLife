@@ -20,6 +20,7 @@
         android:textColor="@color/cortextobranco"
         android:textColorHint="@color/cortextobranco"
         android:backgroundTint="@color/cortextobranco"
+        android:lines="1"
         android:singleLine="true"/>
 
     <LinearLayout

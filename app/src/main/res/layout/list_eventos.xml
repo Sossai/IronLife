@@ -12,7 +12,8 @@
         android:layout_height="70dp"
         android:src="@drawable/raid_demo"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="16dp"
+        />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -72,6 +73,7 @@
         android:src="@drawable/ic_ghost"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/tituloevento"/>
 
 </RelativeLayout>
