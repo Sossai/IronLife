@@ -12,8 +12,7 @@
         android:layout_height="70dp"
         android:src="@drawable/raid_demo"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        />
+        android:layout_marginLeft="16dp"/>
 
     <ProgressBar
         android:id="@+id/progress"
@@ -75,5 +74,11 @@
         android:layout_marginRight="16dp"
         android:layout_centerVertical="true"
         android:layout_below="@+id/tituloevento"/>
+
+    <TextView
+        android:id="@+id/descricaoTipoEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </RelativeLayout>

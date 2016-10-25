@@ -1,8 +1,6 @@
 package dev42.ironlife.adapters;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +23,13 @@ import static android.view.View.GONE;
  * Created by Fernando on 10/10/2016.
  */
 
-public class EventoAdapter extends BaseAdapter {
+public class EventoUsuariosAdapter extends BaseAdapter {
 
     Activity activity;
     View layout;
     List<Evento> listEventos;
 
-    public EventoAdapter(List<Evento> listEventos, Activity activity){
+    public EventoUsuariosAdapter(List<Evento> listEventos, Activity activity){
         this.activity = activity;
         this.listEventos = listEventos;
     }
@@ -58,7 +56,6 @@ public class EventoAdapter extends BaseAdapter {
         holder.fim.setText(txt);
         txt = "Organizador : " + evento.getResponsavel();
         holder.responsavel.setText(txt);
-        holder.descricaoTipoEvento.setText(evento.getDescricaoTipoEvento());
 
         if(evento.isUsuarioRegistrado()){
             holder.ghost.setImageResource(R.drawable.ic_ghost);
@@ -98,7 +95,6 @@ public class EventoAdapter extends BaseAdapter {
         TextView responsavel;
         ImageView ghost;
         ProgressBar progress;
-        TextView descricaoTipoEvento;
 
         public ViewHolder(View view){
             this.imagem = (ImageView)view.findViewById(R.id.imagemevento);
@@ -107,7 +103,6 @@ public class EventoAdapter extends BaseAdapter {
             this.fim = (TextView)view.findViewById(R.id.dataencerramentoevento);
             this.responsavel = (TextView)view.findViewById(R.id.responsavelevento);
             this.ghost = (ImageView)view.findViewById(R.id.ghost);
-            this.descricaoTipoEvento = (TextView)view.findViewById(R.id.descricaoTipoEvento);
             this.progress = (ProgressBar) view.findViewById(R.id.progress);
         }
     }

@@ -36,6 +36,7 @@ public class EventoConverter {
                 evento.setIdResponsavel(Integer.parseInt(jsonEvento.getString("idusuarioresponsavel")));
                 evento.setUsuarioRegistrado(Boolean.valueOf(jsonEvento.getString("usuarioRegistrado")));
                 evento.setImagem(jsonEvento.getString("tipoeventoimagem"));
+                evento.setDescricaoTipoEvento(jsonEvento.getString("tipoeventodescricao"));
 
                 eventos.add(evento);
             }

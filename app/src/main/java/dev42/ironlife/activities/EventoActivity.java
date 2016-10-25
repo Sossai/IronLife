@@ -29,6 +29,7 @@ import dev42.ironlife.adapters.EventoAdapter;
 import dev42.ironlife.converters.EventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
+import dev42.ironlife.model.EventoUsuarios;
 import dev42.ironlife.tasks.GetDadosTask;
 
 import static android.R.attr.breadCrumbShortTitle;
@@ -108,10 +109,19 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         cancelar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 cancelarEvento(eventoSelecionado);
+                return false;
+            }
+        });
 
-
+        sobre.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(EventoActivity.this, ViewEventoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("eventoSelecionado",eventoSelecionado);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 return false;
             }
         });
@@ -139,8 +149,10 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     public void carregaLista(){
         tipoRetorno = 1;
-        if(progress)
+        if(progress) {
+            //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
+        }
 
         String url = getString(R.string.url_lista_eventos);
         url += 1;   //  **  Id do usuario logado    **

@@ -2,13 +2,14 @@ package dev42.ironlife.model;
 
 import android.provider.ContactsContract;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Fernando on 10/10/2016.
  */
 
-public class Evento {
+public class Evento implements Serializable {
     private Integer id;
     private String titulo;
     private String dataCriacao;
