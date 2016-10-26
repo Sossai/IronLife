@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/backgroundescuro_contraste"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:layout_marginRight="1dp">
+
+        <ImageView
+            android:id="@+id/ghostU1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_ghost"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/usuariopar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text="Sossai"
+            android:textColor="@color/cortextobranco"
+            android:layout_toRightOf="@+id/ghostU1"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/backgroundescuro_contraste"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:layout_marginLeft="1dp">
+
+        <ImageView
+            android:id="@+id/ghostU2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_ghost"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/usuarioimpar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:text="SrMassacre"
+            android:textColor="@color/cortextobranco"
+            android:layout_toRightOf="@+id/ghostU2"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"/>
+    </RelativeLayout>
+
+
+
+</LinearLayout>

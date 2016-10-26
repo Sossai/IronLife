@@ -134,31 +134,67 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         });
     }
 
-    void recuperarListaTipoEvento(){
+    protected void recuperarListaTipoEvento(){
         tipoRetorno = 2;
         String url = getString(R.string.url_lista_tipo_evento);
         GetDadosTask task = new GetDadosTask(this, url,null, "GET");
         task.execute();
     }
 
-    void enviaDados(){
-        Log.e("enviadados", "enviadados");
-
+    protected void enviaDados(){
         tipoRetorno = 1;
-        String url = getString(R.string.url_cria_evento);
-        HashMap<String, String> postDataParams = new HashMap<>();
-        postDataParams.put("descricao",titulo.getText().toString());
-        postDataParams.put("datainicio",dataInicio.getText().toString());
-        postDataParams.put("horainicio",horaInicio.getText().toString());
-        postDataParams.put("dataencerramento",dataFim.getText().toString());
-        postDataParams.put("horaencerramento",horaFim.getText().toString());
-        //postDataParams.put("idtipoevento","1");         //  **  Alterar **
-        postDataParams.put("idtipoevento",tipoEventoSelecionado.getId().toString());         //  **  Alterar **
-        postDataParams.put("idusuariocriador","1");      //  **  Alterar **
-        postDataParams.put("idusuarioresponsavel","1");  //  **  Alterar **
 
-        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
-        task.execute();
+        if(dadosValidos()){
+
+            String url = getString(R.string.url_cria_evento);
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("descricao",titulo.getText().toString());
+            postDataParams.put("datainicio",dataInicio.getText().toString());
+            postDataParams.put("horainicio",horaInicio.getText().toString());
+            postDataParams.put("dataencerramento",dataFim.getText().toString());
+            postDataParams.put("horaencerramento",horaFim.getText().toString());
+            postDataParams.put("idtipoevento",tipoEventoSelecionado.getId().toString());
+            postDataParams.put("idusuariocriador","1");      //  **  Alterar **
+            postDataParams.put("idusuarioresponsavel","1");  //  **  Alterar **
+
+            GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+            task.execute();
+        }
+    }
+
+    protected boolean dadosValidos(){
+        Boolean dadosValidos = true;
+        if(titulo.getText().toString().length() == 0 ){
+            Toast.makeText(this, "Entre com um Título.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+
+        else if(dataInicio.getText().toString().length() == 0) {
+            Toast.makeText(this, "Selecione uma data de início.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+        else if(horaInicio.getText().toString().length() == 0) {
+            Toast.makeText(this, "Selecione uma hora de início.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+        else if(dataFim.getText().toString().length() == 0) {
+            Toast.makeText(this, "Selecione uma data de encerramento.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+        else if(horaFim.getText().toString().length() == 0) {
+            Toast.makeText(this, "Selecione uma hora de encerramento.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+        else if(horaFim.getText().toString().length() == 0) {
+            Toast.makeText(this, "Selecione uma hora de encerramento.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+
+        else if(tipoEventoSelecionado == null) {
+            Toast.makeText(this, "Selecione um tipo de evento.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }
+        return dadosValidos;
     }
 
     @Override

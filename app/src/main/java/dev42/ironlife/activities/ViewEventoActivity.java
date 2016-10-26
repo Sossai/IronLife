@@ -5,16 +5,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import dev42.ironlife.R;
+import dev42.ironlife.adapters.EventoUsuariosViewAdapter;
+import dev42.ironlife.converters.EventoUsuariosViewConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
+import dev42.ironlife.model.EventoUsuariosView;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class ViewEventoActivity extends AppCompatActivity implements RetornoDelegate {
 
     private Evento eventoSelecionado;
+    private List<EventoUsuariosView> eventoUsuariosViews;
+    ListView listViewUsuarios;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +40,8 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         eventoSelecionado = (Evento) bundle.getSerializable("eventoSelecionado");
         helperEvento();
         carregaEvento();
+
+        listViewUsuarios = (ListView)findViewById(R.id.usuarios);
     }
 
     protected void helperEvento(){
@@ -71,11 +83,19 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
 
     @Override
     public void LidaComRetorno(String retorno) {
-        Log.e("retorno", retorno);
+
+        EventoUsuariosViewConverter eventoUsuariosViewConverter = new EventoUsuariosViewConverter();
+        eventoUsuariosViews = eventoUsuariosViewConverter.converte(retorno);
+
+        if(eventoUsuariosViews != null){
+            EventoUsuariosViewAdapter adapter = new EventoUsuariosViewAdapter(eventoUsuariosViews, this );
+            listViewUsuarios.setAdapter(adapter);
+        }
     }
 
     @Override
     public void LidaComErro(String erro) {
         Log.e("Erro", erro);
+        Toast.makeText( this, "Lamento Guardião, erro ao conectar no servidor.", Toast.LENGTH_LONG).show();
     }
 }
