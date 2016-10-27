@@ -2,25 +2,20 @@ package dev42.ironlife.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,11 +24,8 @@ import dev42.ironlife.adapters.EventoAdapter;
 import dev42.ironlife.converters.EventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
-import dev42.ironlife.model.EventoUsuarios;
+import dev42.ironlife.model.Usuario;
 import dev42.ironlife.tasks.GetDadosTask;
-
-import static android.R.attr.breadCrumbShortTitle;
-import static android.R.attr.format;
 
 public class EventoActivity extends AppCompatActivity implements RetornoDelegate, SwipeRefreshLayout.OnRefreshListener {
 
@@ -46,6 +38,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     private EventoAdapter adapter;
     private Integer posicaoEventoSelecionado;
     private Evento eventoSelecionado;
+    private final String PREF_NOME = "UsuarioShared";
+    private Usuario usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +48,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         listView = (ListView)findViewById(R.id.listvieweventos);
         progress = true;
+        carregaDadosShared();
         carregaLista();
 
         registerForContextMenu(listView);
@@ -76,6 +71,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
         swipe.setOnRefreshListener(this);
+
+
+
     }
 
     @Override
@@ -132,7 +130,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_inscrever_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
-        postDataParams.put("idusuario","1");    //  **  Alterar ** Id logado
+        postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
@@ -142,7 +140,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_cancelar_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
-        postDataParams.put("idusuario","1");    //  **  Alterar ** Id logado
+        postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
@@ -154,11 +152,40 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
         }
 
-        String url = getString(R.string.url_lista_eventos);
-        url += 1;   //  **  Id do usuario logado    **
+        String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
+        //url += 1;   //  **  Id do usuario logado    **
         GetDadosTask task = new GetDadosTask(this, url, null, "GET");
         task.execute();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_evento, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId())
+        {
+            case R.id.logout:
+                //  **  Remove o shared preferences **
+                SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+                editor.commit();
+
+                //  **  Volta tela delogin  **
+                Intent intent = new Intent(EventoActivity.this, MainActivity.class);
+                startActivity(intent);
+                return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 
     @Override
     public void LidaComRetorno(String retorno) {
@@ -243,5 +270,16 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     public void onRefresh() {
         progress = false;
         carregaLista();
+    }
+
+    protected void carregaDadosShared()
+    {
+        //  ** Carrega do Shared Preferences    **
+        SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
+        usuarioLogado = new Usuario();
+        usuarioLogado.setId(Integer.parseInt(settings.getString("id","")));
+        usuarioLogado.setNickpsn(settings.getString("nickpsn",""));
+
+        setTitle(usuarioLogado.getNickpsn());
     }
 }

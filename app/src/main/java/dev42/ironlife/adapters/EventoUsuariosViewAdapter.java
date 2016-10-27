@@ -19,6 +19,7 @@ import dev42.ironlife.model.Evento;
 import dev42.ironlife.model.EventoUsuariosView;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by Fernando on 10/10/2016.
@@ -52,9 +53,11 @@ public class EventoUsuariosViewAdapter extends BaseAdapter {
 
         holder.nickpsnPar.setText(eventoUsuariosView.getUsuarioPar().getNickpsn());
         if(eventoUsuariosView.getUsuarioImpar() == null) {
-            holder.nickpsnImpar.setText("");
-            holder.imgImpar.setVisibility(GONE);
-        }
+            //holder.nickpsnImpar.setText("");
+            //holder.imgImpar.setVisibility(GONE);
+            holder.celulaImpar.setVisibility(View.INVISIBLE);
+        }else
+            holder.nickpsnImpar.setText(eventoUsuariosView.getUsuarioImpar().getNickpsn());
         return layout;
     }
 
@@ -78,12 +81,14 @@ public class EventoUsuariosViewAdapter extends BaseAdapter {
         TextView nickpsnImpar;
         ImageView imgPar;
         ImageView imgImpar;
+        View celulaImpar;
 
         public ViewHolder(View view){
             this.nickpsnPar = (TextView)view.findViewById(R.id.usuariopar);
             this.nickpsnImpar = (TextView)view.findViewById(R.id.usuarioimpar);
             this.imgPar = (ImageView)view.findViewById(R.id.ghostU1);
             this.imgImpar = (ImageView)view.findViewById(R.id.ghostU2);
+            this.celulaImpar = (View) view.findViewById(R.id.celulaImpar);
         }
     }
 

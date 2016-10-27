@@ -33,15 +33,16 @@ public class EventoUsuariosViewConverter {
                 usuario.setId(Integer.parseInt(jsonEvento.getString("id")));
                 usuario.setNickpsn(jsonEvento.getString("nickpsn"));
 
-                Log.e("usuvconve", jsonEvento.getString("nickpsn") );
-
                 if(i %2 == 0){
                     eventoUsuariosView = new EventoUsuariosView();
                     eventoUsuariosView.setUsuarioPar(usuario);
                     eventoUsuariosView.setUsuarioImpar(null);
+
+//                    Log.e("Par",jsonEvento.getString("nickpsn") );
                 }
                 else {
                     eventoUsuariosView.setUsuarioImpar(usuario);
+//                    Log.e("IMPAR",jsonEvento.getString("nickpsn") );
                     flagAdd = true;
                 }
                 //  **  Adiciona na lista sempre que montar o par ou acabar a lista **

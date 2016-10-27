@@ -1,15 +1,18 @@
 package dev42.ironlife.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Fernando on 24/10/2016.
  */
 
-public class Usuario {
+public class Usuario{
     private Integer id;
     private String nickpsn;
     private String nome;
     private String email;
     private Integer idtipousuario;
+//    private String senha;
 
     public Integer getId() {
         return id;
@@ -50,4 +53,12 @@ public class Usuario {
     public void setIdtipousuario(Integer idtipousuario) {
         this.idtipousuario = idtipousuario;
     }
+
+//    public String getSenha() {
+//        return senha;
+//    }
+//
+//    public void setSenha(String senha) {
+//        this.senha = senha;
+//    }
 }

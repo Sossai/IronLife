@@ -6,6 +6,7 @@
     android:paddingBottom="1dp">
 
     <RelativeLayout
+        android:id="@+id/celulaPar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
-            android:text="Sossai"
+            android:text="-"
             android:textColor="@color/cortextobranco"
             android:layout_toRightOf="@+id/ghostU1"
             android:layout_centerVertical="true"
@@ -36,6 +37,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/celulaImpar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -58,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="6dp"
-            android:text="SrMassacre"
+            android:text="-"
             android:textColor="@color/cortextobranco"
             android:layout_toRightOf="@+id/ghostU2"
             android:layout_centerVertical="true"
