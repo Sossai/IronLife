@@ -1,11 +1,14 @@
 package dev42.ironlife.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -41,10 +45,15 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     private final String PREF_NOME = "UsuarioShared";
     private Usuario usuarioLogado;
 
+    private ProgressBar progressBar;
+    private View loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
+
+        loading = (View) findViewById(R.id.frameload);
 
         listView = (ListView)findViewById(R.id.listvieweventos);
         progress = true;
@@ -66,12 +75,12 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             public void onClick(View v) {
                 Intent intent = new Intent(EventoActivity.this, AddEventoActivity.class );
                 startActivity(intent);
+
             }
         });
 
         swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
         swipe.setOnRefreshListener(this);
-
 
 
     }
@@ -149,7 +158,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         tipoRetorno = 1;
         if(progress) {
             //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
+            //progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
         }
 
         String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
@@ -176,6 +185,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 editor.clear();
                 editor.commit();
 
+                finish();
                 //  **  Volta tela delogin  **
                 Intent intent = new Intent(EventoActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -190,7 +200,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     @Override
     public void LidaComRetorno(String retorno) {
         if(progress)
-            progressDialog.dismiss();
+            loading.setVisibility(View.GONE);
+            //progressDialog.dismiss();
 
         switch (tipoRetorno){
             case 1:

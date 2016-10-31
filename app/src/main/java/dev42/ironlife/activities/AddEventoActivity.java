@@ -282,10 +282,12 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
                 switch (campo){
                     case "INICIO":
-                        horaInicio.setText(hourOfDay + ":" + minute);
+                        //horaInicio.setText(hourOfDay + ":" + minute);
+                        horaInicio.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+
                         break;
                     case "FIM":
-                        horaFim.setText(hourOfDay + ":" + minute);
+                        horaFim.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
                         break;
                 }
             }

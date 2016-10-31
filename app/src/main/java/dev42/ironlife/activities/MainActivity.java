@@ -1,5 +1,7 @@
 package dev42.ironlife.activities;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     private Usuario usuarioLogado;
     private final String PREF_NOME = "UsuarioShared";
 
+    private Activity activity = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
