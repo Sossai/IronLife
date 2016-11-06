@@ -18,46 +18,7 @@
         android:layout_height="0dp"
         android:src="@drawable/logoironlife"
         android:layout_weight="1"/>
-    <EditText
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:hint="@string/hint_login"
-        android:textColor="@color/cortextobranco"
-        android:textColorHint="@color/cortextobranco"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/cortextobranco"
-        android:singleLine="true"/>
-    <EditText
-        android:id="@+id/senha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:hint="@string/hint_senha"
-        android:inputType="textPassword"
-        android:textColor="@color/cortextobranco"
-        android:textColorHint="@color/cortextobranco"
-        android:backgroundTint="@color/cortextobranco"
-        android:singleLine="true"/>
 
-    <CheckBox
-        android:id="@+id/checksalvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:text="@string/check_salvar_dados"
-        android:layout_gravity="center"
-        android:textColor="@color/cortextobranco"
-        android:checked="true"
-        android:buttonTint="@color/cortextobranco"/>
 
     <Button
         android:id="@+id/btnlogin"
@@ -65,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:text="Login"
+        android:text="Entrar"
         android:layout_gravity="center"
         android:textColor="@color/cortextobranco"
         android:background="@color/coralerta"

@@ -121,4 +121,52 @@ public class WebClient {
 
         return result.toString();
     }
+
+    public String getJsonLoginApi(){
+
+        String cookies = this.postDataParams.get("Cookie");
+        String headers = this.postDataParams.get("x-csrf");
+        String apiKey = this.postDataParams.get("X-API-Key");
+
+        String resposta = null;
+
+        Log.e("url", urlString);
+
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json; charset=utf-8");
+            connection.setRequestProperty("Content-type", "application/json;charset=utf-8");
+            connection.setRequestProperty("Connection", "Keep-Alive");
+
+            connection.setRequestProperty("Cookie", cookies);
+            connection.setRequestProperty("x-csrf", headers);
+            connection.setRequestProperty("X-API-Key", apiKey);
+            connection.setUseCaches(false);
+
+//            connection.setAllowUserInteraction(false);
+//            connection.setDoInput(true);
+//            connection.setDoOutput(true);
+
+
+            //Log.e("cookies pas", cookies);
+            //Log.e("connection", connection.toString());
+
+            StringBuffer response = new StringBuffer();
+            InputStream in = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            resposta = response.toString();
+
+        }catch (Exception ex){
+            //Log.e("webclient getJson", ex.getMessage());
+            Log.e("MYAPP", "exception", ex);
+        }
+
+        return resposta;
+    }
 }

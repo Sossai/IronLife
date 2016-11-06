@@ -43,6 +43,11 @@ public class GetDadosTask extends AsyncTask<Object, Object, String> {
                     webclient = new WebClient(url, postDataParams);
                     resposta = webclient.postJson();
                     break;
+
+                case "GETLOGINAPI":
+                    webclient = new WebClient(url, postDataParams);
+                    resposta = webclient.getJsonLoginApi();
+                    break;
             }
 
         }catch (Exception ex){

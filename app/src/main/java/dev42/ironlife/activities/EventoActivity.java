@@ -29,6 +29,7 @@ import dev42.ironlife.converters.EventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
 import dev42.ironlife.model.Usuario;
+import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class EventoActivity extends AppCompatActivity implements RetornoDelegate, SwipeRefreshLayout.OnRefreshListener {
@@ -47,6 +48,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     private ProgressBar progressBar;
     private View loading;
+    private UsuarioLogadoBung usuarioLogadoBung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,14 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         listView = (ListView)findViewById(R.id.listvieweventos);
         progress = true;
+
+        usuarioLogadoBung = new UsuarioLogadoBung(this);
+        usuarioLogadoBung.getDadosShared();
+
+        /*
         carregaDadosShared();
         carregaLista();
+        */
 
         registerForContextMenu(listView);
         //  **  Chamo o ContextMenu com 1 clique    **
@@ -180,11 +188,11 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         {
             case R.id.logout:
                 //  **  Remove o shared preferences **
-                SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.clear();
-                editor.commit();
-
+//                SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
+//                SharedPreferences.Editor editor = settings.edit();
+//                editor.clear();
+//                editor.commit();
+                usuarioLogadoBung.deleteDadosShared();
                 finish();
                 //  **  Volta tela delogin  **
                 Intent intent = new Intent(EventoActivity.this, MainActivity.class);

@@ -18,9 +18,11 @@ import dev42.ironlife.R;
 import dev42.ironlife.converters.UsuarioConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Usuario;
+import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
-public class MainActivity extends AppCompatActivity implements RetornoDelegate {
+//public class MainActivity extends AppCompatActivity implements RetornoDelegate {
+public class MainActivity extends AppCompatActivity {
 
     private EditText login,senha;
     private Usuario usuarioLogado;
@@ -32,20 +34,33 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login = (EditText)findViewById(R.id.login);
+        Button loginBtn = (Button)findViewById(R.id.btnlogin);
+
+        UsuarioLogadoBung usuarioLogadoBung = new UsuarioLogadoBung(this);
+        usuarioLogadoBung.getDadosShared();
+
+        if(!usuarioLogadoBung.getMembershipId().isEmpty()){
+            Intent intent = new Intent(MainActivity.this, EventoActivity.class);
+            startActivity(intent);
+        }
+
+/*        login = (EditText)findViewById(R.id.login);
         senha = (EditText)findViewById(R.id.senha);
         Button loginBtn = (Button)findViewById(R.id.btnlogin);
 
         carregaDadosShared();
-
+*/
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validaUsuario();
+
+                Intent intent = new Intent(MainActivity.this, LoginPsnActivity.class);
+                startActivity(intent);
             }
         });
     }
-    protected void validaUsuario(){
+
+ /*   protected void validaUsuario(){
         String url = getString(R.string.url_validar_usuario);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("email",login.getText().toString());
@@ -80,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     {
         SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
         SharedPreferences.Editor editor = settings.edit();
-        //**  Salva no SharedPreferences  **
+        /*//**  Salva no SharedPreferences  **
         editor.putString("id", usuarioLogado.getId().toString());
         editor.putString("nickpsn", usuarioLogado.getNickpsn());
         editor.putString("nome", usuarioLogado.getNome());
@@ -96,5 +111,5 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
         login.setText(settings.getString("email",""));
         senha.setText(settings.getString("senha",""));
-    }
+    }*/
 }

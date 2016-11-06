@@ -24,7 +24,10 @@
         <activity android:name=".activities.IntroActivity" />
         <activity android:name=".activities.EventoActivity" />
         <activity android:name=".activities.AddEventoActivity" />
-        <activity android:name=".activities.ViewEventoActivity"></activity>
+        <activity android:name=".activities.ViewEventoActivity" />
+        <activity android:name=".activities.LoginPsnActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

@@ -17,4 +17,7 @@
     <item name="url_evento_com_usuarios_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_evento_com_usuarios/</item>
     <item name="url_lista_usuarios_evento_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_usuarios_evento/</item>
     <item name="url_validar_usuario_local" type="string">http://10.1.1.105/ironlife/app/usuarios/validar/</item>
+    <item name="url_bungie" type="string">https://www.bungie.net/Platform/</item>
+
+
 </resources>
