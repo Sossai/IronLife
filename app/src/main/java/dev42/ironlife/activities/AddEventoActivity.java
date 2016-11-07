@@ -32,6 +32,7 @@ import dev42.ironlife.adapters.TipoEventoAdapter;
 import dev42.ironlife.converters.TipoEventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.TipoEvento;
+import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class AddEventoActivity extends AppCompatActivity implements RetornoDelegate {
@@ -146,6 +147,9 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
         if(dadosValidos()){
 
+            UsuarioLogadoBung usuarioLogadoBung = new UsuarioLogadoBung(this);
+            usuarioLogadoBung.getDadosShared();
+
             String url = getString(R.string.url_cria_evento);
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("descricao",titulo.getText().toString());
@@ -154,8 +158,8 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
             postDataParams.put("dataencerramento",dataFim.getText().toString());
             postDataParams.put("horaencerramento",horaFim.getText().toString());
             postDataParams.put("idtipoevento",tipoEventoSelecionado.getId().toString());
-            postDataParams.put("idusuariocriador","1");      //  **  Alterar **
-            postDataParams.put("idusuarioresponsavel","1");  //  **  Alterar **
+            postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
+            postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
 
             GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
             task.execute();

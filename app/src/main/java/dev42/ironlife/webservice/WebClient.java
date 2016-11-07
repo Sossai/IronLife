@@ -100,7 +100,7 @@ public class WebClient {
             return response.toString();
 
         }catch (Exception ex){
-            Log.e("Erro webclient postJson", ex.getMessage());
+            Log.e("tag","Erro webclient postJson", ex);
             return null;
 
         }

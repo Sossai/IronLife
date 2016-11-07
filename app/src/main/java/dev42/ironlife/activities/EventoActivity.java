@@ -63,9 +63,13 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
 
+        setTitle(usuarioLogadoBung.getDisplayName());
+
+        carregaLista();
+
         /*
         carregaDadosShared();
-        carregaLista();
+
         */
 
         registerForContextMenu(listView);
@@ -147,7 +151,11 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_inscrever_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
-        postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
+        //postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
+        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());    //  **  Alterar ** Id logado
+        postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());    //  **  Alterar ** Id logado
+
+
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
@@ -157,7 +165,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_cancelar_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
-        postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
+        //postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
+
+        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId().toString());    //  **  Alterar ** Id logado
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
@@ -169,7 +179,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             //progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
         }
 
-        String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
+        //String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
+        String url = getString(R.string.url_lista_eventos) + usuarioLogadoBung.getMembershipId().toString();
         //url += 1;   //  **  Id do usuario logado    **
         GetDadosTask task = new GetDadosTask(this, url, null, "GET");
         task.execute();
@@ -267,7 +278,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     @Override
     public void LidaComErro(String erro) {
         if(progress)
-            progressDialog.dismiss();
+            loading.setVisibility(View.GONE);
+            //progressDialog.dismiss();
 
         switch (tipoRetorno){
             case 1:

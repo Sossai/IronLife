@@ -17,7 +17,7 @@ public class Evento implements Serializable {
     private String horaInicio;
     private String dataEncerramento;
     private String horaEncerramento;
-    private Integer idResponsavel;
+    private String idResponsavel;
     private String responsavel;
     private Integer idTipoEvento;
     private String descricaoTipoEvento;
@@ -104,13 +104,19 @@ public class Evento implements Serializable {
     public void setDescricaoTipoEvento(String descricaoTipoEvento) {
         this.descricaoTipoEvento = descricaoTipoEvento;
     }
-
     public String getImagem() {
         return imagem;
     }
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public String getIdResponsavel() {
+        return idResponsavel;
+    }
+    public void setIdResponsavel(String idResponsavel) {
+        this.idResponsavel = idResponsavel;
     }
 
     public boolean isUsuarioRegistrado() {
@@ -121,11 +127,5 @@ public class Evento implements Serializable {
         this.usuarioRegistrado = usuarioRegistrado;
     }
 
-    public Integer getIdResponsavel() {
-        return idResponsavel;
-    }
 
-    public void setIdResponsavel(Integer idResponsavel) {
-        this.idResponsavel = idResponsavel;
-    }
 }

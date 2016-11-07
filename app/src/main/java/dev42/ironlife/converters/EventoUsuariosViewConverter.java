@@ -1,5 +1,6 @@
 package dev42.ironlife.converters;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import java.util.List;
 import dev42.ironlife.model.Evento;
 import dev42.ironlife.model.EventoUsuariosView;
 import dev42.ironlife.model.Usuario;
+import dev42.ironlife.model.UsuarioLogadoBung;
 
 /**
  * Created by Fernando on 12/10/2016.
@@ -22,26 +24,32 @@ public class EventoUsuariosViewConverter {
 
         List<EventoUsuariosView> eventoUsuariosViews = new ArrayList<>();
         EventoUsuariosView eventoUsuariosView = new EventoUsuariosView();
-        Usuario usuario;
+//        Usuario usuario;
+        Context context = null;
         boolean flagAdd = false;
         try{
             JSONArray js = new JSONArray(json);
             for(int i = 0; i < js.length();i++)
             {
+
                 JSONObject jsonEvento = js.getJSONObject(i);
-                usuario = new Usuario();
-                usuario.setId(Integer.parseInt(jsonEvento.getString("id")));
-                usuario.setNickpsn(jsonEvento.getString("nickpsn"));
+                UsuarioLogadoBung usuarioLogadoBung = new UsuarioLogadoBung(context);
+                usuarioLogadoBung.setMembershipId(jsonEvento.getString("membershipid"));
+                usuarioLogadoBung.setDisplayName(jsonEvento.getString("displayname"));
+
+//                usuario = new Usuario();
+//                usuario.setId(Integer.parseInt(jsonEvento.getString("id")));
+//                usuario.setNickpsn(jsonEvento.getString("nickpsn"));
 
                 if(i %2 == 0){
                     eventoUsuariosView = new EventoUsuariosView();
-                    eventoUsuariosView.setUsuarioPar(usuario);
+                    eventoUsuariosView.setUsuarioPar(usuarioLogadoBung);
                     eventoUsuariosView.setUsuarioImpar(null);
 
 //                    Log.e("Par",jsonEvento.getString("nickpsn") );
                 }
                 else {
-                    eventoUsuariosView.setUsuarioImpar(usuario);
+                    eventoUsuariosView.setUsuarioImpar(usuarioLogadoBung);
 //                    Log.e("IMPAR",jsonEvento.getString("nickpsn") );
                     flagAdd = true;
                 }

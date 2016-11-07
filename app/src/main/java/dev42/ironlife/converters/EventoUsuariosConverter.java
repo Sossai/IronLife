@@ -43,7 +43,7 @@ public class EventoUsuariosConverter {
                     eventoUsuarios.setDataEncerramento(jsonEvento.getString("dataencerramento"));
                     eventoUsuarios.setHoraEncerramento(jsonEvento.getString("horaencerramento"));
                     eventoUsuarios.setResponsavel(jsonEvento.getString("nomeresponsavel"));
-                    eventoUsuarios.setIdResponsavel(Integer.parseInt(jsonEvento.getString("idusuarioresponsavel")));
+                    eventoUsuarios.setIdResponsavel(jsonEvento.getString("idusuarioresponsavel"));
                     eventoUsuarios.setUsuarioRegistrado(Boolean.valueOf(jsonEvento.getString("usuarioRegistrado")));
                     eventoUsuarios.setImagem(jsonEvento.getString("tipoeventoimagem"));
                 }else{

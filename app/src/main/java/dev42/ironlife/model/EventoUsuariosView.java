@@ -5,22 +5,22 @@ package dev42.ironlife.model;
  */
 
 public class EventoUsuariosView {
-    Usuario usuarioPar;
-    Usuario usuarioImpar;
+    UsuarioLogadoBung usuarioPar;
+    UsuarioLogadoBung usuarioImpar;
 
-    public Usuario getUsuarioPar() {
+    public UsuarioLogadoBung getUsuarioPar() {
         return usuarioPar;
     }
 
-    public void setUsuarioPar(Usuario usuarioPar) {
+    public void setUsuarioPar(UsuarioLogadoBung usuarioPar) {
         this.usuarioPar = usuarioPar;
     }
 
-    public Usuario getUsuarioImpar() {
+    public UsuarioLogadoBung getUsuarioImpar() {
         return usuarioImpar;
     }
 
-    public void setUsuarioImpar(Usuario usuarioImpar) {
+    public void setUsuarioImpar(UsuarioLogadoBung usuarioImpar) {
         this.usuarioImpar = usuarioImpar;
     }
 }

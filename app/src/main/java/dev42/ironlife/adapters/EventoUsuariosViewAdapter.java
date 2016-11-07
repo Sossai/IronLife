@@ -51,13 +51,13 @@ public class EventoUsuariosViewAdapter extends BaseAdapter {
             holder = (ViewHolder)layout.getTag();
         }
 
-        holder.nickpsnPar.setText(eventoUsuariosView.getUsuarioPar().getNickpsn());
+        holder.nickpsnPar.setText(eventoUsuariosView.getUsuarioPar().getDisplayName());
         if(eventoUsuariosView.getUsuarioImpar() == null) {
             //holder.nickpsnImpar.setText("");
             //holder.imgImpar.setVisibility(GONE);
             holder.celulaImpar.setVisibility(View.INVISIBLE);
         }else
-            holder.nickpsnImpar.setText(eventoUsuariosView.getUsuarioImpar().getNickpsn());
+            holder.nickpsnImpar.setText(eventoUsuariosView.getUsuarioImpar().getDisplayName());
         return layout;
     }
 
