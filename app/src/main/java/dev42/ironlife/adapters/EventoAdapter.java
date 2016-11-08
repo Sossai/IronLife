@@ -52,12 +52,14 @@ public class EventoAdapter extends BaseAdapter {
         }
 
         holder.titulo.setText(evento.getTitulo());
-        String txt = "Inicio : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
-        holder.inicio.setText(txt);
-        txt = "Fim : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
-        holder.fim.setText(txt);
-        txt = "Organizador : " + evento.getResponsavel();
-        holder.responsavel.setText(txt);
+        //String txt = "Inicio : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
+        holder.inicio.setText(evento.getDataInicio());
+        holder.hrinicio.setText(evento.getHoraInicio().toString());
+        //txt = "Fim : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
+        holder.fim.setText(evento.getDataEncerramento());
+        holder.hrfim.setText(evento.getHoraEncerramento().toString());
+        //String txt = "Organizador : " + evento.getResponsavel();
+        holder.responsavel.setText("Organizador : " + evento.getResponsavel());
         holder.descricaoTipoEvento.setText(evento.getDescricaoTipoEvento());
 
         if(evento.isUsuarioRegistrado()){
@@ -94,7 +96,9 @@ public class EventoAdapter extends BaseAdapter {
         ImageView imagem;
         TextView titulo;
         TextView inicio;
+        TextView hrinicio;
         TextView fim;
+        TextView hrfim;
         TextView responsavel;
         ImageView ghost;
         ProgressBar progress;
@@ -104,7 +108,9 @@ public class EventoAdapter extends BaseAdapter {
             this.imagem = (ImageView)view.findViewById(R.id.imagemevento);
             this.titulo = (TextView)view.findViewById(R.id.tituloevento);
             this.inicio = (TextView)view.findViewById(R.id.datainiioevento);
+            this.hrinicio = (TextView)view.findViewById(R.id.horainicioevento);
             this.fim = (TextView)view.findViewById(R.id.dataencerramentoevento);
+            this.hrfim = (TextView)view.findViewById(R.id.horafimevento);
             this.responsavel = (TextView)view.findViewById(R.id.responsavelevento);
             this.ghost = (ImageView)view.findViewById(R.id.ghost);
             this.descricaoTipoEvento = (TextView)view.findViewById(R.id.descricaoTipoEvento);

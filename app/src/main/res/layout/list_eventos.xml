@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="wrap_content"
     android:background="@color/backgroundescuro"
-    android:layout_marginRight="16dp"
-    android:layout_marginLeft="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/imagemevento"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
-        android:src="@drawable/raid_demo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/raid_demo2"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="8dp" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -25,34 +25,139 @@
         android:id="@+id/tituloevento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escolinha 1"
+        android:text="Escolinha 1 12 13123 123 12312414"
         android:layout_toRightOf="@id/imagemevento"
         android:textColor="@color/cortextobranco"
         android:textSize="22sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp"/>
+        android:layout_alignTop="@id/imagemevento"
+        android:layout_marginLeft="8dp"/>
 
-    <TextView
-        android:id="@+id/datainiioevento"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/datas"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inicio : 10/10/2016 - 20:35"
-        android:textColor="@color/cortextobranco"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/imagemevento"
         android:layout_below="@id/tituloevento"
-        android:layout_toRightOf="@id/imagemevento"
-        android:layout_marginLeft="15dp"
-        android:textSize="12sp"/>
+        android:layout_marginLeft="8dp">
 
-    <TextView
-        android:id="@+id/dataencerramentoevento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fim : 10/10/2016 - 20:35"
-        android:textColor="@color/cortextobranco"
-        android:layout_below="@id/datainiioevento"
-        android:layout_toRightOf="@id/imagemevento"
-        android:layout_marginLeft="15dp"
-        android:textSize="12sp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/setainicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/seta_up_verde"
+                android:layout_marginTop="2dp"/>
+            <ImageView
+                android:id="@+id/calendario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendario"
+                android:layout_toRightOf="@id/setainicio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/datainiioevento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10/10/2016"
+                android:textColor="@color/cortextobranco"
+                android:layout_toRightOf="@id/calendario"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/relogio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_relogio"
+                android:layout_toRightOf="@id/setainicio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/calendario"/>
+
+            <TextView
+                android:id="@+id/horainicioevento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20:35"
+                android:textColor="@color/cortextobranco"
+                android:layout_toRightOf="@id/relogio"
+                android:textSize="12sp"
+                android:layout_below="@id/calendario"
+                android:layout_marginTop="3dp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp">
+
+            <ImageView
+                android:id="@+id/setafim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/seta_down_vermelha"
+                android:layout_marginTop="2dp"/>
+            <ImageView
+                android:id="@+id/calendariofim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendario"
+                android:layout_toRightOf="@id/setafim"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/dataencerramentoevento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10/10/2016"
+                android:textColor="@color/cortextobranco"
+                android:layout_toRightOf="@id/calendariofim"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/relogiofim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_relogio"
+                android:layout_toRightOf="@id/setafim"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/calendariofim"/>
+
+            <TextView
+                android:id="@+id/horafimevento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20:35"
+                android:textColor="@color/cortextobranco"
+                android:layout_toRightOf="@id/relogiofim"
+                android:textSize="12sp"
+                android:layout_below="@id/calendariofim"
+                android:layout_marginTop="3dp"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ghost"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_ghost"
+            android:layout_marginRight="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/responsavelevento"
@@ -60,20 +165,12 @@
         android:layout_height="wrap_content"
         android:text="Criador : Sossai"
         android:textColor="@color/cortextobranco"
-        android:layout_below="@id/dataencerramentoevento"
+        android:layout_below="@id/datas"
         android:layout_toRightOf="@id/imagemevento"
-        android:layout_marginLeft="15dp"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"/>
 
-    <ImageView
-        android:id="@+id/ghost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_ghost"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/tituloevento"/>
+
 
     <TextView
         android:id="@+id/descricaoTipoEvento"

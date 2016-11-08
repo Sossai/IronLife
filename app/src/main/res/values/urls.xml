@@ -11,22 +11,22 @@
     <item name="url_lista_usuarios_evento_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/listar_usuarios_evento/</item>
     <item name="url_validar_usuario_remoto" type="string">http://www.dev42.com.br/ironlife/app/usuarios/validar/</item>
 
-    <item name="url_lista_eventos_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_eventos/</item>
-    <item name="url_cria_evento_local" type="string">http://10.1.1.105/ironlife/app/rest/criar_evento/</item>
-    <item name="url_lista_tipo_evento_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_tipos_eventos/</item>
-    <item name="url_inscrever_evento_local" type="string">http://10.1.1.105/ironlife/app/eventousuario/adicionar/</item>
-    <item name="url_cancelar_evento_local" type="string">http://10.1.1.105/ironlife/app/eventousuario/remover/</item>
-    <item name="url_evento_com_usuarios_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_evento_com_usuarios/</item>
-    <item name="url_lista_usuarios_evento_local" type="string">http://10.1.1.105/ironlife/app/rest/listar_usuarios_evento/</item>
-    <item name="url_validar_usuario_local" type="string">http://10.1.1.105/ironlife/app/usuarios/validar/</item>
+    <item name="url_lista_eventos" type="string">http://10.1.1.105/ironlife/app/rest/listar_eventos/</item>
+    <item name="url_cria_evento" type="string">http://10.1.1.105/ironlife/app/rest/criar_evento/</item>
+    <item name="url_lista_tipo_evento" type="string">http://10.1.1.105/ironlife/app/rest/listar_tipos_eventos/</item>
+    <item name="url_inscrever_evento" type="string">http://10.1.1.105/ironlife/app/eventousuario/adicionar/</item>
+    <item name="url_cancelar_evento" type="string">http://10.1.1.105/ironlife/app/eventousuario/remover/</item>
+    <item name="url_evento_com_usuarios" type="string">http://10.1.1.105/ironlife/app/rest/listar_evento_com_usuarios/</item>
+    <item name="url_lista_usuarios_evento" type="string">http://10.1.1.105/ironlife/app/rest/listar_usuarios_evento/</item>
+    <item name="url_validar_usuario" type="string">http://10.1.1.105/ironlife/app/usuarios/validar/</item>
 
 
-    <item name="url_lista_eventos" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_eventos/</item>
-    <item name="url_cria_evento" type="string">http://192.168.0.107:81/ironlife/app/rest/criar_evento/</item>
-    <item name="url_lista_tipo_evento" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_tipos_eventos/</item>
-    <item name="url_inscrever_evento" type="string">http://192.168.0.107:81/ironlife/app/eventousuario/adicionar/</item>
-    <item name="url_cancelar_evento" type="string">http://192.168.0.107:81/ironlife/app/eventousuario/remover/</item>
-    <item name="url_evento_com_usuarios" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_evento_com_usuarios/</item>
-    <item name="url_lista_usuarios_evento" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_usuarios_evento/</item>
-    <item name="url_validar_usuario" type="string">http://192.168.0.107:81/ironlife/app/usuarios/validar/</item>
+    <item name="url_lista_eventos_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_eventos/</item>
+    <item name="url_cria_evento_work" type="string">http://192.168.0.107:81/ironlife/app/rest/criar_evento/</item>
+    <item name="url_lista_tipo_evento_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_tipos_eventos/</item>
+    <item name="url_inscrever_evento_work" type="string">http://192.168.0.107:81/ironlife/app/eventousuario/adicionar/</item>
+    <item name="url_cancelar_evento_work" type="string">http://192.168.0.107:81/ironlife/app/eventousuario/remover/</item>
+    <item name="url_evento_com_usuarios_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_evento_com_usuarios/</item>
+    <item name="url_lista_usuarios_evento_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_usuarios_evento/</item>
+    <item name="url_validar_usuario_work" type="string">http://192.168.0.107:81/ironlife/app/usuarios/validar/</item>
 </resources>
