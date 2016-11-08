@@ -18,16 +18,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import dev42.ironlife.R;
+import dev42.ironlife.adapters.EventoAdapter;
 import dev42.ironlife.adapters.TipoEventoAdapter;
 import dev42.ironlife.converters.TipoEventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
@@ -36,14 +42,15 @@ import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class AddEventoActivity extends AppCompatActivity implements RetornoDelegate {
-    final Context context = this;
-    final Activity activity = this;
+    private final Context context = this;
+    private final Activity activity = this;
     private EditText titulo, dataInicio, dataFim, horaInicio, horaFim, tipo, idtipo;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Button idconfirmar;
     private Integer tipoRetorno;
     private List<TipoEvento> listTipoEventos;
     private TipoEvento tipoEventoSelecionado;
+    ImageView imgtipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         tipo = (EditText)findViewById(R.id.tipo);
         idconfirmar = (Button)findViewById(R.id.idconfirmar);
         idtipo = (EditText)findViewById(R.id.idtipo);
+        imgtipo = (ImageView)findViewById(R.id.imagemtipo);
 
         recuperarListaTipoEvento();
 
@@ -100,12 +108,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Tipo");
-
                 final ListView modeList = new ListView(context);
-//                String[] stringArray = new String[] { "Escolinha", "Raid" };
-//                ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
-//                modeList.setAdapter(modeAdapter);
-
                 TipoEventoAdapter adapter = new TipoEventoAdapter(listTipoEventos, activity);
                 modeList.setAdapter(adapter);
 
@@ -121,6 +124,10 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
                         //tipo.setText(modeList.getItemAtPosition(position).toString());
                         tipoEventoSelecionado = (TipoEvento) modeList.getItemAtPosition(position);
                         tipo.setText(tipoEventoSelecionado.getDescricao());
+
+                        Picasso.with(activity)
+                                .load(tipoEventoSelecionado.getImagem())
+                                .into(imgtipo);
                         dialog.dismiss();
                     }
                 });
@@ -168,11 +175,23 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     protected boolean dadosValidos(){
         Boolean dadosValidos = true;
+/*        SimpleDateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY");
+        Date datainicio = null, datafim = null;
+        try{
+
+            if(dataInicio.getText().toString().length() != 0)
+                datainicio = dateFormat.parse(dataInicio.getText().toString());
+            if(dataFim.getText().toString().length() != 0)
+                datafim = dateFormat.parse(dataFim.getText().toString());
+
+        }catch (Exception ex){
+            return false;
+        }*/
+
         if(titulo.getText().toString().length() == 0 ){
             Toast.makeText(this, "Entre com um Título.", Toast.LENGTH_LONG).show();
             dadosValidos = false;
         }
-
         else if(dataInicio.getText().toString().length() == 0) {
             Toast.makeText(this, "Selecione uma data de início.", Toast.LENGTH_LONG).show();
             dadosValidos = false;
@@ -193,11 +212,14 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
             Toast.makeText(this, "Selecione uma hora de encerramento.", Toast.LENGTH_LONG).show();
             dadosValidos = false;
         }
-
         else if(tipoEventoSelecionado == null) {
             Toast.makeText(this, "Selecione um tipo de evento.", Toast.LENGTH_LONG).show();
             dadosValidos = false;
-        }
+        }/*
+        else if(datafim.after(datainicio)){
+            Toast.makeText(this, "Datas inválidas.", Toast.LENGTH_LONG).show();
+            dadosValidos = false;
+        }*/
         return dadosValidos;
     }
 
@@ -228,7 +250,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     @Override
     public void LidaComRetorno(String retorno) {
-        Log.e("Sucesso tipo",retorno);
+//        Log.e("Sucesso tipo",retorno);
 
         switch (tipoRetorno){
             case 1:
@@ -239,12 +261,10 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
                     Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
                 break;
             case 2:
-                Log.e("Puta merda 3", retorno);
                 TipoEventoConverter converter = new TipoEventoConverter();
                 listTipoEventos = converter.converte(retorno);
                 break;
         }
-
     }
 
     private void pegaData(final String campo){

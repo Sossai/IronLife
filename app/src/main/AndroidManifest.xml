@@ -21,13 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.IntroActivity" />
-        <activity android:name=".activities.EventoActivity" />
-        <activity android:name=".activities.AddEventoActivity" />
-        <activity android:name=".activities.ViewEventoActivity" />
+        <activity android:name=".activities.IntroActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.EventoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.AddEventoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ViewEventoActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.LoginPsnActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:noHistory="true"></activity>
+            android:screenOrientation="portrait"
+            android:noHistory="true">
+        </activity>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ public class TipoEventoConverter {
                 tipoEvento = new TipoEvento();
                 tipoEvento.setId(Integer.parseInt(jsonEvento.getString("id")));
                 tipoEvento.setDescricao(jsonEvento.getString("descricao"));
+                tipoEvento.setImagem(jsonEvento.getString("imagem"));
 
                 listTipoEventos.add(tipoEvento);
             }

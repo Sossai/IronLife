@@ -49,6 +49,7 @@ public class TipoEventoAdapter extends BaseAdapter {
 
         holder.id.setText(tipoEvento.getId().toString());
         holder.descricao.setText(tipoEvento.getDescricao().toString());
+        holder.imagem.setText(tipoEvento.getImagem());
 
         return layout;
     }
@@ -71,9 +72,11 @@ public class TipoEventoAdapter extends BaseAdapter {
     class ViewHolder{
         TextView descricao;
         TextView id;
+        TextView imagem;
         public ViewHolder(View view){
             this.id = (TextView) view.findViewById(R.id.id_tipo_evento);
             this.descricao = (TextView)view.findViewById(R.id.tipo_evento_descricao);
+            this.imagem = (TextView)view.findViewById(R.id.tipo_evento_imagem);
         }
     }
 }

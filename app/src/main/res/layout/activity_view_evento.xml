@@ -18,69 +18,9 @@
         android:textColor="@color/cortextobranco"
         android:textColorHint="@color/cortextobranco"
         android:backgroundTint="@color/cortextobranco"
+        android:textSize="22sp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:id="@+id/datainicio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Data Inicio"
-            android:textColor="@color/cortextobranco"
-            android:textColorHint="@color/cortextobranco"
-            android:backgroundTint="@color/cortextobranco" />
-
-        <TextView
-            android:id="@+id/horainicio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Hora Inicio"
-            android:textColorHint="@color/cortextobranco"
-            android:textColor="@color/cortextobranco"
-            android:backgroundTint="@color/cortextobranco"
-            android:focusable="false" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:id="@+id/datafim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Data Fim"
-            android:textColorHint="@color/cortextobranco"
-            android:textColor="@color/cortextobranco"
-            android:backgroundTint="@color/cortextobranco"
-            android:focusable="false"/>
-
-        <TextView
-            android:id="@+id/horafim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Hora Fim"
-            android:textColorHint="@color/cortextobranco"
-            android:textColor="@color/cortextobranco"
-            android:backgroundTint="@color/cortextobranco"
-            android:focusable="false"/>
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tipo"
@@ -95,6 +35,148 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/imagemtipo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/raid_demo2"
+            android:layout_marginRight="8dp" />
+
+        <RelativeLayout
+            android:id="@+id/rela1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/setainicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/seta_up_verde"
+                android:layout_marginTop="2dp"/>
+
+            <ImageView
+                android:id="@+id/calendario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendario"
+                android:layout_toRightOf="@id/setainicio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="1dp"/>
+
+            <TextView
+                android:id="@+id/datainicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Inicio"
+                android:textColor="@color/cortextobranco"
+                android:textColorHint="@color/cortextobranco"
+                android:backgroundTint="@color/cortextobranco"
+                android:layout_toRightOf="@id/calendario"/>
+
+            <ImageView
+                android:id="@+id/relogio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_relogio"
+                android:layout_toRightOf="@id/setainicio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/calendario"/>
+
+            <TextView
+                android:id="@+id/horainicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Hora Inicio"
+                android:textColorHint="@color/cortextobranco"
+                android:textColor="@color/cortextobranco"
+                android:backgroundTint="@color/cortextobranco"
+                android:focusable="false"
+                android:layout_below="@id/calendario"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/relogio"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rela2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="16dp">
+
+            <ImageView
+                android:id="@+id/setafim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/seta_down_vermelha"
+                android:layout_marginTop="2dp" />
+
+            <ImageView
+                android:id="@+id/calendario2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendario"
+                android:layout_toRightOf="@id/setafim"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="1dp" />
+
+            <TextView
+                android:id="@+id/datafim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Data Fim"
+                android:textColorHint="@color/cortextobranco"
+                android:textColor="@color/cortextobranco"
+                android:backgroundTint="@color/cortextobranco"
+                android:focusable="false"
+                android:layout_toRightOf="@id/calendario2"/>
+
+            <ImageView
+                android:id="@+id/relogio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_relogio"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/calendario2"
+                android:layout_toRightOf="@id/setafim"
+                android:layout_marginTop="5dp" />
+
+            <TextView
+                android:id="@+id/horafim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Hora Fim"
+                android:textColorHint="@color/cortextobranco"
+                android:textColor="@color/cortextobranco"
+                android:backgroundTint="@color/cortextobranco"
+                android:focusable="false"
+                android:layout_below="@id/calendario2"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/relogio2"/>
+
+            </RelativeLayout>
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,8 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:foreground="@color/corbarras"
-            android:src="@drawable/backgroud"
-            />
+            android:src="@drawable/backgroud"/>
 
         <TextView
             android:id="@+id/textguardioesalistados"
@@ -125,7 +206,6 @@
         android:id="@+id/usuarios"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
 
 </LinearLayout>

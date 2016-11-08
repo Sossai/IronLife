@@ -214,6 +214,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                             limpaCookies();
                         }else{
                             Toast.makeText(this, "Lamento Guardião, apenas membros do clã permitido IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
+                            retornaFalha();
                         }
                     }else
                         retornaFalha();

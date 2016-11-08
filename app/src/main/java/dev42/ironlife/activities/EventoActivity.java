@@ -108,6 +108,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         MenuItem cancelar = menu.add("Cancelar Inscrição");
         MenuItem sobre = menu.add("Sobre");
 
+//        eventoSelecionado.ge
+
         if(eventoSelecionado.isUsuarioRegistrado()){
             menu.getItem(0).setVisible(false);
             menu.getItem(1).setVisible(true);
@@ -151,33 +153,34 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         String url = getString(R.string.url_inscrever_evento);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("idevento",evento.getId().toString());
-        //postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
-        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());    //  **  Alterar ** Id logado
-        postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());    //  **  Alterar ** Id logado
-
+        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
+        postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
 
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
 
     public void cancelarEvento(Evento evento){
-        tipoRetorno = 3;
-        String url = getString(R.string.url_cancelar_evento);
-        HashMap<String, String> postDataParams = new HashMap<>();
-        postDataParams.put("idevento",evento.getId().toString());
-        //postDataParams.put("idusuario",usuarioLogado.getId().toString());    //  **  Alterar ** Id logado
-
-        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId().toString());    //  **  Alterar ** Id logado
-        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
-        task.execute();
+        if(evento.getIdResponsavel().equals(usuarioLogadoBung.getMembershipId())){
+            Toast.makeText(this, "Nunca abandone uma luta que começou Guardião!", Toast.LENGTH_LONG ).show();
+        }else
+        {
+            tipoRetorno = 3;
+            String url = getString(R.string.url_cancelar_evento);
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("idevento",evento.getId().toString());
+            postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId().toString());
+            GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+            task.execute();
+        }
     }
 
     public void carregaLista(){
         tipoRetorno = 1;
-        if(progress) {
+        //if(progress) {
             //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             //progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
-        }
+        //}
 
         //String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
         String url = getString(R.string.url_lista_eventos) + usuarioLogadoBung.getMembershipId().toString();
