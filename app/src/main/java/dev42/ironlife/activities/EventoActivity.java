@@ -67,11 +67,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         carregaLista();
 
-        /*
-        carregaDadosShared();
-
-        */
-
         registerForContextMenu(listView);
         //  **  Chamo o ContextMenu com 1 clique    **
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,9 +101,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         MenuItem inscrever = menu.add("Inscrever");
         MenuItem cancelar = menu.add("Cancelar Inscrição");
+        MenuItem editar = menu.add("Editar");
         MenuItem sobre = menu.add("Sobre");
-
-//        eventoSelecionado.ge
 
         if(eventoSelecionado.isUsuarioRegistrado()){
             menu.getItem(0).setVisible(false);
@@ -118,6 +112,12 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             menu.getItem(0).setVisible(true);
             menu.getItem(1).setVisible(false);
         }
+
+        //  **  Apenas Responsavel pode editar  **
+        if(eventoSelecionado.getIdResponsavel().equals(usuarioLogadoBung.getMembershipId()))
+            menu.getItem(3).setVisible(true);
+        else
+            menu.getItem(3).setVisible(false);
 
         inscrever.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -131,6 +131,20 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 cancelarEvento(eventoSelecionado);
+                return false;
+            }
+        });
+
+        editar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Intent intent = new Intent(EventoActivity.this, AddEventoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("eventoSelecionado",eventoSelecionado);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
                 return false;
             }
         });
@@ -306,14 +320,4 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         carregaLista();
     }
 
-    protected void carregaDadosShared()
-    {
-        //  ** Carrega do Shared Preferences    **
-        SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
-        usuarioLogado = new Usuario();
-        usuarioLogado.setId(Integer.parseInt(settings.getString("id","")));
-        usuarioLogado.setNickpsn(settings.getString("nickpsn",""));
-
-        setTitle(usuarioLogado.getNickpsn());
-    }
 }

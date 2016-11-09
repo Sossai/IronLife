@@ -37,6 +37,7 @@ import dev42.ironlife.adapters.EventoAdapter;
 import dev42.ironlife.adapters.TipoEventoAdapter;
 import dev42.ironlife.converters.TipoEventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
+import dev42.ironlife.model.Evento;
 import dev42.ironlife.model.TipoEvento;
 import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
@@ -50,7 +51,8 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     private Integer tipoRetorno;
     private List<TipoEvento> listTipoEventos;
     private TipoEvento tipoEventoSelecionado;
-    ImageView imgtipo;
+    private ImageView imgtipo;
+    private Integer idEvento = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,17 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         idconfirmar = (Button)findViewById(R.id.idconfirmar);
         idtipo = (EditText)findViewById(R.id.idtipo);
         imgtipo = (ImageView)findViewById(R.id.imagemtipo);
+
+        //  **  Se for editar recebe os dados   **
+        Evento eventoSelecionado;
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null) {
+            eventoSelecionado = (Evento) bundle.getSerializable("eventoSelecionado");
+            setDadosUpdate(eventoSelecionado);
+//            Log.e("Evento", eventoSelecionado.getTitulo());
+        }
+
 
         recuperarListaTipoEvento();
 
@@ -149,6 +162,22 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         task.execute();
     }
 
+    protected void setDadosUpdate(Evento evento){
+        titulo.setText(evento.getTitulo());
+        dataInicio.setText(evento.getDataInicio());
+        dataFim.setText(evento.getDataEncerramento());
+        horaInicio.setText(evento.getHoraInicio());
+        horaFim.setText(evento.getHoraEncerramento());
+        tipo.setText(evento.getDescricaoTipoEvento());
+        idtipo.setText(evento.getIdTipoEvento().toString());
+        tipoEventoSelecionado = new TipoEvento();
+        tipoEventoSelecionado.setId(evento.getIdTipoEvento());
+        Picasso.with(activity)
+                .load(evento.getImagem())
+                .into(imgtipo);
+        idEvento = evento.getId();
+    }
+
     protected void enviaDados(){
         tipoRetorno = 1;
 
@@ -168,8 +197,13 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
             postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
             postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
 
+            //  *** Update  **
+            if(idEvento != null)
+                postDataParams.put("id",idEvento.toString());
+
             GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
             task.execute();
+
         }
     }
 
@@ -240,7 +274,10 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
         switch (tipoRetorno){
             case 1:
-                Toast.makeText( this, "Falha ao criar Evento..", Toast.LENGTH_LONG).show();
+                if(idEvento == null)
+                    Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText( this, "Falha ao editar Evento.", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 Toast.makeText( this, "Falha ao recuperar Tipo de Evento.", Toast.LENGTH_LONG).show();
@@ -255,10 +292,16 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         switch (tipoRetorno){
             case 1:
                 if(retorno.trim().equals("SUCESSO")){
-                    Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                    if(idEvento == null)
+                        Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText( this, "Evento editado com sucesso!", Toast.LENGTH_LONG).show();
                     finish();
                 }else
-                    Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                    if(idEvento == null)
+                        Toast.makeText( this, "Falha ao criar Evento.", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText( this, "Falha ao editar Evento.", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 TipoEventoConverter converter = new TipoEventoConverter();

@@ -43,50 +43,6 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
 
         usuarioLogadoBung = new UsuarioLogadoBung(this);
         carregaWebView();
-
-        /*
-        String urlGet = "https://www.bungie.net/Platform/User/GetBungieAccount/4611686018428679528/2/";
-
-        HashMap<String, String> postDataParams;
-        postDataParams = new HashMap<String, String>();;
-
-        postDataParams.put("X-API-Key", apiKey);
-        passo = 3;
-
-        GetDadosTask task = new GetDadosTask(delegate, urlGet, postDataParams, "GETLOGINAPI" );
-        task.execute();
-*/
-
-
-
-
-/*
-        //String urlGet = getString(R.string.url_bungie) + "Destiny/SearchDestinyPlayer/2/Sossai";
-        String urlGet = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Sossai/";
-        Log.e("urlGet", urlGet);
-
-        HashMap<String, String> postDataParams;
-        postDataParams = new HashMap<String, String>();;
-        //postDataParams.put("Cookie", cookies);
-        //postDataParams.put("x-csrf", xcsrf);
-        postDataParams.put("X-API-Key", apiKey);
-        passo = 2;
-
-        GetDadosTask task = new GetDadosTask(delegate, urlGet, postDataParams, "GETLOGINAPI" );
-        task.execute();
-*/
-
-
-
-
-/*
-        String json = "[{\"Response\":{\"user\":{\"membershipId\":\"4545054\",\"uniqueName\":\"4545054\",\"displayName\":\"Sossai\",\"profilePicture\":70546,\"profileTheme\":37,\"userTitle\":0,\"successMessageFlags\":\"0\",\"isDeleted\":false,\"about\":\"\",\"firstAccess\":\"2014-06-10T11:33:32.155Z\",\"lastUpdate\":\"2016-10-11T12:20:01.07Z\",\"context\":{\"isFollowing\":false,\"ignoreStatus\":{\"isIgnored\":false,\"ignoreFlags\":0}},\"psnDisplayName\":\"Sossai\",\"showActivity\":true,\"locale\":\"pt-br\",\"localeInheritDefault\":true,\"showGroupMessaging\":true,\"profilePicturePath\":\"/img/profile/avatars/bungieday_24.jpg\",\"profileThemeName\":\"lingling\",\"userTitleDisplay\":\"Newbie\",\"statusText\":\"\",\"statusDate\":\"0001-01-01T00:00:00Z\"},\"email\":\"ferpa@sigmanet.com.br\",\"emailStatus\":9,\"emailUsage\":\"31\",\"psnId\":\"Sossai\",\"userAcls\":[],\"showGamertagPublic\":false,\"showFacebookPublic\":false,\"showPsnPublic\":true,\"publicCredentialTypes\":[2],\"isThemeLight\":true,\"adultMode\":false,\"userResearchStatusFlags\":\"0\",\"privacy\":0,\"hideDestinyData\":false,\"pmToastsEnabled\":true},\"ErrorCode\":1,\"ThrottleSeconds\":0,\"ErrorStatus\":\"Success\",\"Message\":\"Ok\",\"MessageData\":{}}]";
-        json = json.replace("\\", "");
-        PegaDadosJson pegaDadosJson = new PegaDadosJson(json);
-        String ret = pegaDadosJson.valor("displayName");
-*/
-        //Log.e("ret", ret);
-
     }
 
     private void carregaWebView()
@@ -162,7 +118,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 {
                     usuarioLogadoBung.setDisplayName(pegaDadosJson.valor("displayName",""));
 
-                    Log.e("Sucesso ret passo 1", retorno);
+                    //Log.e("Sucesso ret passo 1", retorno);
 
                     urlGet = getString(R.string.url_bungie) + "Destiny/SearchDestinyPlayer/2/"+usuarioLogadoBung.getDisplayName().trim() + '/';
                     passo = 2;
@@ -176,14 +132,14 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 //Log.e("Nome", ret);
                 break;
             case 2: //  **  Pegou o MembershipId
-                Log.e("Sucesso ret passo 2", retorno);
+                //Log.e("Sucesso ret passo 2", retorno);
                 pegaDadosJson = new PegaDadosJson(retorno);
 
 
                 if(pegaDadosJson.valor("membershipId","") != null){
                     usuarioLogadoBung.setMembershipId(pegaDadosJson.valor("membershipId",""));
 
-                    Log.e("Sucesso ret passo 2-1", usuarioLogadoBung.getMembershipId());
+                    //Log.e("Sucesso ret passo 2-1", usuarioLogadoBung.getMembershipId());
 
                     urlGet = getString(R.string.url_bungie) + "User/GetBungieAccount/"+usuarioLogadoBung.getMembershipId() + "/2/";
                     passo = 3;
@@ -196,11 +152,11 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 break;
             case 3: //  **  Pegou dados dos Grupo
 
-                Log.e("Sucesso ret passo 3", retorno);
+                //Log.e("Sucesso ret passo 3", retorno);
                 pegaDadosJson = new PegaDadosJson(retorno);
 
                 if(pegaDadosJson.valor("groupId","") != null){
-                    Log.e("groupid", pegaDadosJson.valor("groupId",""));
+                    //Log.e("groupid", pegaDadosJson.valor("groupId",""));
                     usuarioLogadoBung.setGroupId(pegaDadosJson.valor("groupId",""));
                     if(pegaDadosJson.valor("groupName",usuarioLogadoBung.getGroupId()) != null){
                         usuarioLogadoBung.setGroupName(pegaDadosJson.valor("groupName",usuarioLogadoBung.getGroupId()));

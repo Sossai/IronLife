@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import dev42.ironlife.R;
@@ -61,6 +63,7 @@ public class EventoAdapter extends BaseAdapter {
         //String txt = "Organizador : " + evento.getResponsavel();
         holder.responsavel.setText("Organizador : " + evento.getResponsavel());
         holder.descricaoTipoEvento.setText(evento.getDescricaoTipoEvento());
+        holder.idtipoevento.setText(evento.getIdTipoEvento().toString());
 
         if(evento.isUsuarioRegistrado()){
             holder.ghost.setImageResource(R.drawable.ic_ghost);
@@ -103,6 +106,7 @@ public class EventoAdapter extends BaseAdapter {
         ImageView ghost;
         ProgressBar progress;
         TextView descricaoTipoEvento;
+        TextView idtipoevento;
 
         public ViewHolder(View view){
             this.imagem = (ImageView)view.findViewById(R.id.imagemevento);
@@ -115,6 +119,7 @@ public class EventoAdapter extends BaseAdapter {
             this.ghost = (ImageView)view.findViewById(R.id.ghost);
             this.descricaoTipoEvento = (TextView)view.findViewById(R.id.descricaoTipoEvento);
             this.progress = (ProgressBar) view.findViewById(R.id.progress);
+            this.idtipoevento = (TextView) view.findViewById(R.id.idTipoEvento);
         }
     }
 
