@@ -135,7 +135,6 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 //Log.e("Sucesso ret passo 2", retorno);
                 pegaDadosJson = new PegaDadosJson(retorno);
 
-
                 if(pegaDadosJson.valor("membershipId","") != null){
                     usuarioLogadoBung.setMembershipId(pegaDadosJson.valor("membershipId",""));
 
@@ -163,11 +162,18 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
 
                         //  **  Peguei todos os dados necessários, salvo nas sharede preferences o usuario valido   **
                         if(validaCla(usuarioLogadoBung)){
-                            usuarioLogadoBung.setDadosShared();
+                            cadastraUsuarioBungie();
+
+                            limpaCookies();
+                            finish();
+
+
+/*                            usuarioLogadoBung.setDadosShared();
+
                             Intent intent = new Intent(LoginPsnActivity.this, EventoActivity.class);
                             startActivity(intent);
                             Toast.makeText(this, "Seja bem vindo Guardião.", Toast.LENGTH_LONG).show();
-                            limpaCookies();
+                            limpaCookies();*/
                         }else{
                             Toast.makeText(this, "Lamento Guardião, apenas membros do clã permitido IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
                             retornaFalha();
@@ -175,15 +181,45 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     }else
                         retornaFalha();
                         //Log.e("x","erro2");
-
                 }else
                     retornaFalha();
                     //Log.e("x","erro");
 
                 break;
+            case 4:
+//                Log.e("Retorno 4", retorno);
+                if(retorno.trim().equals("SUCESSO")){
+                    usuarioLogadoBung.setDadosShared();
+
+                    Intent intent = new Intent(LoginPsnActivity.this, EventoActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(this, "Seja bem vindo Guardião.", Toast.LENGTH_LONG).show();
+//                    limpaCookies();
+                }else
+                    retornaFalha();
+
+                break;
         }
+    }
 
+    @Override
+    public void LidaComErro(String erro) {
+        Log.e("Erro" + passo, erro);
+        finish();
+        retornaFalha();
+//        Intent intent = new Intent(LoginPsnActivity.this, MainActivity.class);
+//        startActivity(intent);
+    }
 
+    private void cadastraUsuarioBungie(){
+        passo = 4;
+        String url = getString(R.string.url_add_usuario_bungie);
+        HashMap<String, String> postDataParams = new HashMap<>();
+        postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
+        postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
+
+        GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+        task.execute();
     }
 
     private void retornaFalha(){
@@ -195,14 +231,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
         startActivity(intent);
     }
 
-    @Override
-    public void LidaComErro(String erro) {
-        Log.e("Erro", erro);
-        finish();
-        retornaFalha();
-//        Intent intent = new Intent(LoginPsnActivity.this, MainActivity.class);
-//        startActivity(intent);
-    }
+
 
     private void limpaCookies(){
         if(Build.VERSION.SDK_INT >= 21){
@@ -210,16 +239,6 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
         }else{
             CookieManager.getInstance().removeAllCookie();
         }
-/*        CookieSyncManager.createInstance(this);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookies(callback);
-        cookieManager.setAcceptCookie(false);
-
-        WebView webview = new WebView(this);
-        WebSettings ws = webview.getSettings();
-        ws.setSaveFormData(false);
-        ws.setSavePassword(false); // Not needed for API level 18 or greater (deprecated)*/
-
     }
 
     private boolean validaCla(UsuarioLogadoBung usuarioLogadoBung){

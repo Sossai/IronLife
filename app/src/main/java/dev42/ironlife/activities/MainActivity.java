@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.HashMap;
 
 import dev42.ironlife.R;
@@ -39,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
         UsuarioLogadoBung usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
 
+        //  **  Já tenho o membershipid da bungie   **
         if(!usuarioLogadoBung.getMembershipId().isEmpty()){
+
+
+
             Intent intent = new Intent(MainActivity.this, EventoActivity.class);
             startActivity(intent);
         }
@@ -58,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //  **  Token parar envio do fcm    **
+        FirebaseInstanceId.getInstance().getToken();
+        //Log.d("EventoActivity", "Token: " + token);
+
     }
 
  /*   protected void validaUsuario(){

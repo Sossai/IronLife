@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,6 +92,9 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         swipe.setOnRefreshListener(this);
 
 
+        //  **  Token parar envio do fcm    **
+        //FirebaseInstanceId.getInstance().getToken();
+        atualizaTokenServer();
     }
 
     @Override
@@ -191,10 +196,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     public void carregaLista(){
         tipoRetorno = 1;
-        //if(progress) {
-            //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            //progressDialog = ProgressDialog.show(this, "", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
-        //}
 
         //String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
         String url = getString(R.string.url_lista_eventos) + usuarioLogadoBung.getMembershipId().toString();
@@ -273,7 +274,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 break;
 
             case 3:
-                Log.e("Sucesso 3", retorno);
+//                Log.e("Sucesso 3", retorno);
                 if(retorno.trim().equals("SUCESSO")) {
 
                     //  **  Remove o evento e insere uma atualizado na lista    **
@@ -312,6 +313,29 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 Toast.makeText( this, "Lamento Guardião, não foi possível remove-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    protected void atualizaTokenServer()
+    {
+        //  ** pego o token do shared prref    **
+
+        SharedPreferences settings = this.getSharedPreferences("TokenFcm",0);
+        String token = settings.getString("token","");
+
+        if(token != null)
+        {
+            Log.e("token up", token);
+            //  ** sobe para o server   **
+            String url = getString(R.string.url_add_usuario_bungie);
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
+            postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
+            postDataParams.put("fcmtoken",token);
+
+            GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+            task.execute();
+        }else
+            Log.e("nada","nada de token");
     }
 
     @Override

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "719082384951",
+    "firebase_url": "https://ironlife-e06b6.firebaseio.com",
+    "project_id": "ironlife-e06b6",
+    "storage_bucket": "ironlife-e06b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719082384951:android:9cc2d0fcd2de8d52",
+        "android_client_info": {
+          "package_name": "dev42.ironlife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719082384951-gr3hl56f89pshm13e5knovho5j020b18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm7TLc3qIgL81pykfhClOrfII8L8B-rHQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
