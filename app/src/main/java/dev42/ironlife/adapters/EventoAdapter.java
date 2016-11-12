@@ -64,6 +64,7 @@ public class EventoAdapter extends BaseAdapter {
         holder.responsavel.setText("Organizador : " + evento.getResponsavel());
         holder.descricaoTipoEvento.setText(evento.getDescricaoTipoEvento());
         holder.idtipoevento.setText(evento.getIdTipoEvento().toString());
+        holder.tipoevendodescricao.setText(evento.getDescricaoTipoEvento());
 
         if(evento.isUsuarioRegistrado()){
             holder.ghost.setImageResource(R.drawable.ic_ghost);
@@ -107,6 +108,7 @@ public class EventoAdapter extends BaseAdapter {
         ProgressBar progress;
         TextView descricaoTipoEvento;
         TextView idtipoevento;
+        TextView tipoevendodescricao;
 
         public ViewHolder(View view){
             this.imagem = (ImageView)view.findViewById(R.id.imagemevento);
@@ -120,6 +122,7 @@ public class EventoAdapter extends BaseAdapter {
             this.descricaoTipoEvento = (TextView)view.findViewById(R.id.descricaoTipoEvento);
             this.progress = (ProgressBar) view.findViewById(R.id.progress);
             this.idtipoevento = (TextView) view.findViewById(R.id.idTipoEvento);
+            this.tipoevendodescricao = (TextView) view.findViewById(R.id.tipoevendodescricao);
         }
     }
 

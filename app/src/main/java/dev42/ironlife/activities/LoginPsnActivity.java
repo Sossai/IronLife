@@ -25,7 +25,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
 
     private WebView webView;
     private final String urlLogin = "https://auth.api.sonyentertainmentnetwork.com/2.0/oauth/authorize?response_type=code&client_id=78420c74-1fdf-4575-b43f-eb94c7d770bf&redirect_uri=https%3a%2f%2fwww.bungie.net%2fen%2fUser%2fSignIn%2fPsnid&scope=psn:s2s&request_locale=en&state=8212071061023503780";
-    final String apiKey = "e129b13b149b4ef3ae55a1d1709f49aa";
+    private final String apiKey = "e129b13b149b4ef3ae55a1d1709f49aa";
     //final String apiKey = getString(R.string.APIKey);
     private String cookies = null, xcsrf = null;
     private boolean sucesso = false;
@@ -83,7 +83,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     //final HashMap<String, String> postDataParams;   //  **  Estes parametros não vão mudar  **
                     //https://www.bungie.net/Platform/User/GetBungieNetUser/
                     String urlGet = getString(R.string.url_bungie) + "User/GetBungieNetUser/";
-                    postDataParams = new HashMap<String, String>();;
+                    postDataParams = new HashMap<String, String>();
                     postDataParams.put("Cookie", cookies);
                     postDataParams.put("x-csrf", xcsrf);
                     postDataParams.put("X-API-Key", apiKey);
@@ -175,7 +175,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                             Toast.makeText(this, "Seja bem vindo Guardião.", Toast.LENGTH_LONG).show();
                             limpaCookies();*/
                         }else{
-                            Toast.makeText(this, "Lamento Guardião, apenas membros do clã permitido IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Lamento Guardião, apenas membros do clã IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
                             retornaFalha();
                         }
                     }else

@@ -32,13 +32,24 @@
         android:layout_alignTop="@id/imagemevento"
         android:layout_marginLeft="8dp"/>
 
+    <TextView
+        android:id="@+id/tipoevendodescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raid"
+        android:layout_toRightOf="@id/imagemevento"
+        android:textColor="@color/cortextocinza"
+        android:textSize="11sp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/tituloevento"/>
+
     <LinearLayout
         android:id="@+id/datas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_toRightOf="@id/imagemevento"
-        android:layout_below="@id/tituloevento"
+        android:layout_below="@id/tipoevendodescricao"
         android:layout_marginLeft="8dp">
 
         <RelativeLayout
@@ -91,9 +102,7 @@
                 android:textSize="12sp"
                 android:layout_below="@id/calendario"
                 android:layout_marginTop="3dp"/>
-
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -169,8 +178,6 @@
         android:layout_toRightOf="@id/imagemevento"
         android:textSize="12sp"
         android:layout_marginLeft="8dp"/>
-
-
 
     <TextView
         android:id="@+id/descricaoTipoEvento"

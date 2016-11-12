@@ -11,6 +11,7 @@
     <item name="url_lista_usuarios_evento_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/listar_usuarios_evento/</item>
     <item name="url_validar_usuario_remoto" type="string">http://www.dev42.com.br/ironlife/app/usuarios/validar/</item>
     <item name="url_add_usuario_bungie_remoto" type="string">http://www.dev42.com.br/ironlife/app/Usuariobungie/adicionar/</item>
+    <item name="url_convocar_usuarios_bungie_remoto" type="string">http://www.dev42.com.br/ironlife/app/rest/enviar_mensagem_evento/</item>
 
     <item name="url_lista_eventos" type="string">http://10.1.1.105/ironlife/app/rest/listar_eventos/</item>
     <item name="url_cria_evento" type="string">http://10.1.1.105/ironlife/app/rest/criar_evento/</item>
@@ -21,6 +22,7 @@
     <item name="url_lista_usuarios_evento" type="string">http://10.1.1.105/ironlife/app/rest/listar_usuarios_evento/</item>
     <item name="url_validar_usuario" type="string">http://10.1.1.105/ironlife/app/usuarios/validar/</item>
     <item name="url_add_usuario_bungie" type="string">http://10.1.1.105/ironlife/app/Usuariobungie/adicionar/</item>
+    <item name="url_convocar_usuarios_bungie" type="string">http://10.1.1.105/ironlife/app/rest/enviar_mensagem_evento/</item>
 
     <item name="url_lista_eventos_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_eventos/</item>
     <item name="url_cria_evento_work" type="string">http://192.168.0.107:81/ironlife/app/rest/criar_evento/</item>
@@ -31,4 +33,5 @@
     <item name="url_lista_usuarios_evento_work" type="string">http://192.168.0.107:81/ironlife/app/rest/listar_usuarios_evento/</item>
     <item name="url_validar_usuario_work" type="string">http://192.168.0.107:81/ironlife/app/usuarios/validar/</item>
     <item name="url_add_usuario_bungie_work" type="string">http://192.168.0.107:81/ironlife/app/Usuariobungie/adicionar/</item>
+    <item name="url_convocar_usuarios_bungie_work" type="string">http://192.168.0.107:81/ironlife/app/rest/enviar_mensagem_evento/</item>
 </resources>

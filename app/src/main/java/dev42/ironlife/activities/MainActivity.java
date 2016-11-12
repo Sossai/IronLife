@@ -17,18 +17,21 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.HashMap;
 
 import dev42.ironlife.R;
+import dev42.ironlife.converters.PegaDadosJson;
 import dev42.ironlife.converters.UsuarioConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Usuario;
 import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
-//public class MainActivity extends AppCompatActivity implements RetornoDelegate {
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RetornoDelegate {
+//public class MainActivity extends AppCompatActivity {
 
     private EditText login,senha;
     private Usuario usuarioLogado;
     private final String PREF_NOME = "UsuarioShared";
+    private UsuarioLogadoBung usuarioLogadoBung;
+    private final String apiKey = "e129b13b149b4ef3ae55a1d1709f49aa";
 
     private Activity activity = this;
     @Override
@@ -38,16 +41,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginBtn = (Button)findViewById(R.id.btnlogin);
 
-        UsuarioLogadoBung usuarioLogadoBung = new UsuarioLogadoBung(this);
+        usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
 
         //  **  Já tenho o membershipid da bungie   **
         if(!usuarioLogadoBung.getMembershipId().isEmpty()){
 
+            //  **  Revalida se pertence ao cla **
+            revalidaCla();
 
-
-            Intent intent = new Intent(MainActivity.this, EventoActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this, EventoActivity.class);
+//            startActivity(intent);
         }
 
 /*        login = (EditText)findViewById(R.id.login);
@@ -71,7 +75,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
- /*   protected void validaUsuario(){
+    protected void revalidaCla(){
+
+        String urlGet = getString(R.string.url_bungie) + "User/GetBungieAccount/"+usuarioLogadoBung.getMembershipId() + "/2/";
+        HashMap<String, String> postDataParams = new HashMap<String, String>();
+        postDataParams.put("X-API-Key", apiKey);
+        GetDadosTask task = new GetDadosTask(this, urlGet, postDataParams, "GETLOGINAPI" );
+        task.execute();
+    }
+
+    @Override
+    public void LidaComRetorno(String retorno) {
+        PegaDadosJson pegaDadosJson = new PegaDadosJson(retorno);
+
+        //  **  Se não é mesmo id do grupo que conseguiu logar da 1º vez saiu do cla    **
+        if(pegaDadosJson.valor("groupId","") != null){
+
+            if(pegaDadosJson.valor("groupId","").equals(usuarioLogadoBung.getGroupId())){
+                Intent intent = new Intent(MainActivity.this, EventoActivity.class);
+                startActivity(intent);
+            }else
+            {
+                Toast.makeText(this, "Lamento Guardião, apenas membros do clã IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void LidaComErro(String erro) {
+        Log.e("Erro Main", erro);
+        Toast.makeText(this, "Lamento Guardião, não foi possível validar seu clã.", Toast.LENGTH_LONG).show();
+    }
+
+
+
+/*   protected void validaUsuario(){
         String url = getString(R.string.url_validar_usuario);
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("email",login.getText().toString());

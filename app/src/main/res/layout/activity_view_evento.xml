@@ -177,6 +177,18 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnconvocar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="Convocar Guardiões"
+        android:layout_gravity="center"
+        android:textColor="@color/cortextobranco"
+        android:background="@color/coralerta"
+        android:layout_marginTop="16dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

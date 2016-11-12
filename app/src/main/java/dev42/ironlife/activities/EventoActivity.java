@@ -118,11 +118,12 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             menu.getItem(1).setVisible(false);
         }
 
+        //  ** Sempre é a posição 2 pois 1 das 2 anteriores são removidas   **
         //  **  Apenas Responsavel pode editar  **
         if(eventoSelecionado.getIdResponsavel().equals(usuarioLogadoBung.getMembershipId()))
-            menu.getItem(3).setVisible(true);
+            menu.getItem(2).setVisible(true);
         else
-            menu.getItem(3).setVisible(false);
+            menu.getItem(2).setVisible(false);
 
         inscrever.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -324,7 +325,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         if(token != null)
         {
-            Log.e("token up", token);
+//            Log.e("token up", token);
             //  ** sobe para o server   **
             String url = getString(R.string.url_add_usuario_bungie);
             HashMap<String, String> postDataParams = new HashMap<>();
