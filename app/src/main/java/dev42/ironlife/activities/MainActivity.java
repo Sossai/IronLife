@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     private final String PREF_NOME = "UsuarioShared";
     private UsuarioLogadoBung usuarioLogadoBung;
     private final String apiKey = "e129b13b149b4ef3ae55a1d1709f49aa";
+    private Integer tipoRetorno;
 
     private Activity activity = this;
     @Override
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     }
 
     protected void revalidaCla(){
-
+        tipoRetorno = 1;
         String urlGet = getString(R.string.url_bungie) + "User/GetBungieAccount/"+usuarioLogadoBung.getMembershipId() + "/2/";
         HashMap<String, String> postDataParams = new HashMap<String, String>();
         postDataParams.put("X-API-Key", apiKey);
@@ -84,27 +85,67 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         task.execute();
     }
 
+    protected void atualizaTokenServer()
+    {
+        tipoRetorno = 2;
+        //  ** pego o token do shared pref    **
+        SharedPreferences settings = this.getSharedPreferences("TokenFcm",0);
+        String token = settings.getString("token","");
+
+        if(token != null)
+        {
+//            Log.e("token up", token);
+            //  ** sobe para o server   **
+            String url = getString(R.string.url_add_usuario_bungie);
+            HashMap<String, String> postDataParams = new HashMap<>();
+            postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
+            postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
+            postDataParams.put("fcmtoken",token);
+
+            GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
+            task.execute();
+        }//else
+//            Log.e("nada","nada de token");
+    }
+
     @Override
     public void LidaComRetorno(String retorno) {
-        PegaDadosJson pegaDadosJson = new PegaDadosJson(retorno);
 
-        //  **  Se não é mesmo id do grupo que conseguiu logar da 1º vez saiu do cla    **
-        if(pegaDadosJson.valor("groupId","") != null){
+        switch (tipoRetorno){
+            case 1:
+                PegaDadosJson pegaDadosJson = new PegaDadosJson(retorno);
+                //  **  Se não é mesmo id do grupo que conseguiu logar da 1º vez saiu do cla    **
+                if(pegaDadosJson.valor("groupId","") != null){
+                    if(pegaDadosJson.valor("groupId","").equals(usuarioLogadoBung.getGroupId())){
+                        Intent intent = new Intent(MainActivity.this, EventoActivity.class);
+                        startActivity(intent);
 
-            if(pegaDadosJson.valor("groupId","").equals(usuarioLogadoBung.getGroupId())){
-                Intent intent = new Intent(MainActivity.this, EventoActivity.class);
-                startActivity(intent);
-            }else
-            {
-                Toast.makeText(this, "Lamento Guardião, apenas membros do clã IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
-            }
+                        //  **  Atualiza o token    **
+                        atualizaTokenServer();
+                    }else
+                    {
+                        Toast.makeText(this, "Lamento Guardião, apenas membros do clã IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case 2:
+                break;
         }
+
     }
 
     @Override
     public void LidaComErro(String erro) {
         Log.e("Erro Main", erro);
-        Toast.makeText(this, "Lamento Guardião, não foi possível validar seu clã.", Toast.LENGTH_LONG).show();
+        switch (tipoRetorno){
+            case 1:
+                Toast.makeText(this, "Lamento Guardião, não foi possível validar seu clã.", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                break;
+        }
+
+
     }
 
 

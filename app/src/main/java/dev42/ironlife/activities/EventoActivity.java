@@ -93,8 +93,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
 
         //  **  Token parar envio do fcm    **
-        //FirebaseInstanceId.getInstance().getToken();
-        atualizaTokenServer();
+//        atualizaTokenServer();
     }
 
     @Override
@@ -198,7 +197,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
     public void carregaLista(){
         tipoRetorno = 1;
 
-        //String url = getString(R.string.url_lista_eventos) + usuarioLogado.getId().toString();
         String url = getString(R.string.url_lista_eventos) + usuarioLogadoBung.getMembershipId().toString();
         //url += 1;   //  **  Id do usuario logado    **
         GetDadosTask task = new GetDadosTask(this, url, null, "GET");
@@ -217,11 +215,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         switch (item.getItemId())
         {
             case R.id.logout:
-                //  **  Remove o shared preferences **
-//                SharedPreferences settings = this.getSharedPreferences(PREF_NOME,0);
-//                SharedPreferences.Editor editor = settings.edit();
-//                editor.clear();
-//                editor.commit();
                 usuarioLogadoBung.deleteDadosShared();
                 finish();
                 //  **  Volta tela delogin  **
@@ -231,9 +224,7 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
 
     @Override
     public void LidaComRetorno(String retorno) {
@@ -314,29 +305,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
                 Toast.makeText( this, "Lamento Guardião, não foi possível remove-lo.", Toast.LENGTH_LONG).show();
                 break;
         }
-    }
-
-    protected void atualizaTokenServer()
-    {
-        //  ** pego o token do shared prref    **
-
-        SharedPreferences settings = this.getSharedPreferences("TokenFcm",0);
-        String token = settings.getString("token","");
-
-        if(token != null)
-        {
-//            Log.e("token up", token);
-            //  ** sobe para o server   **
-            String url = getString(R.string.url_add_usuario_bungie);
-            HashMap<String, String> postDataParams = new HashMap<>();
-            postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
-            postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
-            postDataParams.put("fcmtoken",token);
-
-            GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
-            task.execute();
-        }else
-            Log.e("nada","nada de token");
     }
 
     @Override
