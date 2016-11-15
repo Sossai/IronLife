@@ -17,6 +17,7 @@ import java.util.List;
 import dev42.ironlife.R;
 import dev42.ironlife.model.Evento;
 import dev42.ironlife.model.EventoUsuariosView;
+import dev42.ironlife.model.UsuarioLogadoBung;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -24,7 +25,65 @@ import static android.view.View.VISIBLE;
 /**
  * Created by Fernando on 10/10/2016.
  */
+public class EventoUsuariosViewAdapter extends BaseAdapter {
 
+    Activity activity;
+    View layout;
+    List<UsuarioLogadoBung> listUsuarioLogadoBung;
+
+    public EventoUsuariosViewAdapter(List<UsuarioLogadoBung> listUsuarioLogadoBung, Activity activity){
+        this.activity = activity;
+        this.listUsuarioLogadoBung = listUsuarioLogadoBung;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        UsuarioLogadoBung usuarioLogadoBung = listUsuarioLogadoBung.get(position);
+
+        ViewHolder holder;
+        if(convertView == null){
+            layout = inflater.inflate(R.layout.list_usuarios, parent, false);
+            holder = new ViewHolder(layout);
+            layout.setTag(holder);
+        }else{
+            layout = convertView;
+            holder = (ViewHolder)layout.getTag();
+        }
+        holder.nickpsn.setText(usuarioLogadoBung.getDisplayName());
+        return layout;
+    }
+
+    @Override
+    public int getCount() {
+        return listUsuarioLogadoBung.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return listUsuarioLogadoBung.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    class ViewHolder{
+        TextView nickpsn;
+        ImageView img;
+
+        public ViewHolder(View view){
+            this.nickpsn = (TextView)view.findViewById(R.id.nickpsn);
+            this.img = (ImageView)view.findViewById(R.id.ghost);
+        }
+    }
+}
+
+
+
+/*
 public class EventoUsuariosViewAdapter extends BaseAdapter {
 
     Activity activity;
@@ -111,3 +170,4 @@ public class EventoUsuariosViewAdapter extends BaseAdapter {
     }
 
 }
+*/

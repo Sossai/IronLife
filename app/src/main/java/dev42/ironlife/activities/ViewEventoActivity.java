@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +27,13 @@ import dev42.ironlife.tasks.GetDadosTask;
 public class ViewEventoActivity extends AppCompatActivity implements RetornoDelegate {
 
     private Evento eventoSelecionado;
-    private List<EventoUsuariosView> eventoUsuariosViews;
+    private List<UsuarioLogadoBung> listaUsuarios;
     private ListView listViewUsuarios;
+    private GridView gridViewUsuarios;
     private Integer passo;
     private UsuarioLogadoBung usuarioLogadoBung;
     private View frameLoad;
+    private boolean permiteConvocar = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +50,22 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
 
-        Button btnconvocar = (Button)findViewById(R.id.btnconvocar);
-        btnconvocar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                convocar();
-            }
-        });
-
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         eventoSelecionado = (Evento) bundle.getSerializable("eventoSelecionado");
 
         //  **  Apenas o criador pode convocar  **
         if(!eventoSelecionado.getIdResponsavel().equals(usuarioLogadoBung.getMembershipId())){
-            btnconvocar.setVisibility(View.GONE);
+            //  **  Chama o oncreate novamente para desabilitar a opção **
+            permiteConvocar = false;
+            invalidateOptionsMenu();
         }
 
         helperEvento();
         carregaEvento();
 
         listViewUsuarios = (ListView)findViewById(R.id.usuarios);
+        gridViewUsuarios = (GridView)findViewById(R.id.usuariosgrid);
     }
 
     protected void helperEvento(){
@@ -111,11 +110,24 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_view_evento, menu);
+        if(!permiteConvocar){
+            menu.getItem(0).setVisible(false);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()){
             case android.R.id.home:
                 //finish();
                 super.onBackPressed();
+                return true;
+            case R.id.convocar:
+                convocar();
                 return true;
         }
         return true;
@@ -128,11 +140,12 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         switch (passo){
             case 1:
                 EventoUsuariosViewConverter eventoUsuariosViewConverter = new EventoUsuariosViewConverter();
-                eventoUsuariosViews = eventoUsuariosViewConverter.converte(retorno);
+                listaUsuarios = eventoUsuariosViewConverter.converte(retorno);
 
-                if(eventoUsuariosViews != null){
-                    EventoUsuariosViewAdapter adapter = new EventoUsuariosViewAdapter(eventoUsuariosViews, this );
-                    listViewUsuarios.setAdapter(adapter);
+                if(listaUsuarios != null){
+                    EventoUsuariosViewAdapter adapter = new EventoUsuariosViewAdapter(listaUsuarios, this );
+//                    listViewUsuarios.setAdapter(adapter);
+                    gridViewUsuarios.setAdapter(adapter);
                 }
                 break;
             case 2:

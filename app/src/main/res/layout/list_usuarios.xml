@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundescuro_contraste"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/ghost"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_ghost"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/nickpsn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text="Nome"
+            android:textColor="@color/cortextobranco"
+            android:layout_toRightOf="@+id/ghostU1"
+            android:layout_centerVertical="true"
+            android:paddingLeft="6dp"/>
+</LinearLayout>
