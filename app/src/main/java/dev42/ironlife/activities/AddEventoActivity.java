@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import dev42.ironlife.model.TipoEvento;
 import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
+import static android.R.attr.format;
+
 public class AddEventoActivity extends AppCompatActivity implements RetornoDelegate {
     private final Context context = this;
     private final Activity activity = this;
@@ -53,6 +56,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     private TipoEvento tipoEventoSelecionado;
     private ImageView imgtipo;
     private Integer idEvento = null;
+    private View frameLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,9 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         idconfirmar = (Button)findViewById(R.id.idconfirmar);
         idtipo = (EditText)findViewById(R.id.idtipo);
         imgtipo = (ImageView)findViewById(R.id.imagemtipo);
+
+        frameLoad = (View)findViewById(R.id.frameload);
+
 
         //  **  Se for editar recebe os dados   **
         Evento eventoSelecionado;
@@ -158,6 +165,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     protected void recuperarListaTipoEvento(){
         tipoRetorno = 2;
         String url = getString(R.string.url_lista_tipo_evento);
+        frameLoad.setVisibility(View.VISIBLE);
         GetDadosTask task = new GetDadosTask(this, url,null, "GET");
         task.execute();
     }
@@ -201,6 +209,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
             if(idEvento != null)
                 postDataParams.put("id",idEvento.toString());
 
+            frameLoad.setVisibility(View.VISIBLE);
             GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
             task.execute();
 
@@ -209,18 +218,13 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     protected boolean dadosValidos(){
         Boolean dadosValidos = true;
-/*        SimpleDateFormat dateFormat = new SimpleDateFormat("DD-MM-YYYY");
-        Date datainicio = null, datafim = null;
-        try{
 
-            if(dataInicio.getText().toString().length() != 0)
-                datainicio = dateFormat.parse(dataInicio.getText().toString());
-            if(dataFim.getText().toString().length() != 0)
-                datafim = dateFormat.parse(dataFim.getText().toString());
-
-        }catch (Exception ex){
-            return false;
-        }*/
+        Integer diasMaxInicio = 5, diasMaxFim = 2;
+        Date dtHoje = null;
+        Date dtInicio = null;
+        Date dtFim = null;
+        Date dtMaxInicio = null;
+        Date dtMaxFim = null;
 
         if(titulo.getText().toString().length() == 0 ){
             Toast.makeText(this, "Entre com um Título.", Toast.LENGTH_LONG).show();
@@ -249,12 +253,66 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         else if(tipoEventoSelecionado == null) {
             Toast.makeText(this, "Selecione um tipo de evento.", Toast.LENGTH_LONG).show();
             dadosValidos = false;
-        }/*
-        else if(datafim.after(datainicio)){
-            Toast.makeText(this, "Datas inválidas.", Toast.LENGTH_LONG).show();
-            dadosValidos = false;
-        }*/
+        }else{
+        //  ** Validando intervalo de dadtas    **
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date()); // Now use today date.
+            c.add(Calendar.DATE, diasMaxInicio); // Adding 5 days
+            String dtMaxInicioStr = sdf.format(c.getTime());
+
+            String dtHojeStr = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+            String strDtInicio = dataInicio.getText().toString();
+            String strDtFim = dataFim.getText().toString();
+
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                dtInicio = format.parse(strDtInicio);
+                dtHoje = format.parse(dtHojeStr);
+                dtFim = format.parse(strDtFim);
+                dtMaxInicio = format.parse(dtMaxInicioStr);
+
+                c.setTime(dtInicio);
+                c.add(Calendar.DATE, diasMaxFim); // Adding 2 days
+                String dtMaxFimStr = sdf.format(c.getTime());
+                dtMaxFim = format.parse(dtMaxFimStr);
+
+            }catch (Exception ex){}
+
+        /*
+            = 0 -> datas iguais
+            < 0 -> data data menor
+            > 0 -> data maior
+        */
+            // 1 **  Data Inicio maior que hoje
+            if(dtInicio.compareTo(dtHoje) >= 0){
+                // 2 **  Data Inicio menor que hoje + 5 dias
+                if(dtInicio.compareTo(dtMaxInicio) > 0){
+                    Toast.makeText(this, "O evento deve iniciar no máximo daqui a " + diasMaxInicio.toString().trim() + " dias.", Toast.LENGTH_LONG).show();
+                    dadosValidos = false;
+                }
+                // 3 **  Data Final >= data inicio
+                else if(dtFim.compareTo(dtInicio) >= 0 ){
+                    // 4 **  Data Final <= data inicio + 2 dias
+                    if(dtFim.compareTo(dtMaxFim) > 0 ){
+                        Toast.makeText(this, "O evento deve encerrar no máximo " + diasMaxFim.toString().trim() + " dias após o inicio.", Toast.LENGTH_LONG).show();
+                        dadosValidos = false;
+                    }
+                }else{
+                    Toast.makeText(this, "Data final deve ser maior ou igual a data de inicio.", Toast.LENGTH_LONG).show();
+                    dadosValidos = false;
+                }
+            }else{
+                Toast.makeText(this, "Data inicial deve ser maior ou igual a hoje.", Toast.LENGTH_LONG).show();
+                dadosValidos = false;
+            }
+        }
+
+
         return dadosValidos;
+
+
     }
 
     @Override
@@ -270,6 +328,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
 
     @Override
     public void LidaComErro(String erro) {
+        frameLoad.setVisibility(View.GONE);
         Log.e("Erro Criar Evento", erro);
 
         switch (tipoRetorno){
@@ -288,6 +347,7 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
     @Override
     public void LidaComRetorno(String retorno) {
 //        Log.e("Sucesso tipo",retorno);
+        frameLoad.setVisibility(View.GONE);
 
         switch (tipoRetorno){
             case 1:
@@ -323,10 +383,10 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 switch (campo){
                     case "INICIO":
-                        dataInicio.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        dataInicio.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                         break;
                     case "FIM":
-                        dataFim.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        dataFim.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                         break;
                 }
             }

@@ -22,6 +22,9 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,9 +94,18 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
         swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
         swipe.setOnRefreshListener(this);
 
+/*
 
-        //  **  Token parar envio do fcm    **
-//        atualizaTokenServer();
+        Calendar c = Calendar.getInstance();
+        //System.out.println("Current time => " + c.getTime());
+        Log.e("Gettime", c.getTime().toString());
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
+        Log.e("DATA" ,formattedDate);
+*/
+
+/*        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        Log.e("datexxx", date);*/
     }
 
     @Override

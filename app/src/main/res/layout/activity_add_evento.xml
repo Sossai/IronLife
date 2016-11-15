@@ -12,6 +12,19 @@
     tools:context="dev42.ironlife.activities.AddEventoActivity"
     android:background="@color/backgroundescuro">
 
+    <FrameLayout
+        android:id="@+id/frameload"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal|center_vertical"/>
+    </FrameLayout>
+
+
+
     <EditText
         android:id="@+id/addtitulo"
         android:layout_width="match_parent"

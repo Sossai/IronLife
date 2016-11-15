@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import dev42.ironlife.R;
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         //  **  Token parar envio do fcm    **
         FirebaseInstanceId.getInstance().getToken();
         //Log.d("EventoActivity", "Token: " + token);
+
+
 
     }
 

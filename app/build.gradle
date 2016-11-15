@@ -19,7 +19,7 @@ android {
     buildToolsVersion "23.0.3"
 
     //include this line for your android applications
-    applicationVariants.all { variant -> renameArtifact(variant, defaultConfig) }
+    //applicationVariants.all { variant -> renameArtifact(variant, defaultConfig) }
 
     defaultConfig {
         applicationId "dev42.ironlife"

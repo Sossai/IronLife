@@ -28,7 +28,7 @@ public class GetDadosTask extends AsyncTask<Object, Object, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-        //SystemClock.sleep(7000);
+//        SystemClock.sleep(3000);
 
         String resposta = null;
         WebClient webclient;
@@ -45,6 +45,7 @@ public class GetDadosTask extends AsyncTask<Object, Object, String> {
                     break;
 
                 case "GETLOGINAPI":
+
                     webclient = new WebClient(url, postDataParams);
                     resposta = webclient.getJsonLoginApi();
                     break;

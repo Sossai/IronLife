@@ -29,6 +29,7 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
     private ListView listViewUsuarios;
     private Integer passo;
     private UsuarioLogadoBung usuarioLogadoBung;
+    private View frameLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        frameLoad = (View)findViewById(R.id.frameload);
 
         usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
@@ -88,6 +91,7 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         String url = getString(R.string.url_lista_usuarios_evento);
         url += eventoSelecionado.getId();    //  **  Pegar por parametro **
 
+        frameLoad.setVisibility(View.VISIBLE);
         passo = 1;
         GetDadosTask task = new GetDadosTask(this, url,null, "GET");
         task.execute();
@@ -100,7 +104,7 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
         url += '/' + usuarioLogadoBung.getMembershipId();
 //        url += "/1" ;
 
-        //Log.e("URL convocar", url);
+        frameLoad.setVisibility(View.VISIBLE);
         passo = 2;
         GetDadosTask task = new GetDadosTask(this, url,null, "GET");
         task.execute();
@@ -120,6 +124,7 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
     @Override
     public void LidaComRetorno(String retorno) {
 
+        frameLoad.setVisibility(View.GONE);
         switch (passo){
             case 1:
                 EventoUsuariosViewConverter eventoUsuariosViewConverter = new EventoUsuariosViewConverter();
@@ -138,6 +143,7 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
 
     @Override
     public void LidaComErro(String erro) {
+        frameLoad.setVisibility(View.GONE);
         Log.e("Erro", erro);
         switch (passo) {
             case 1:
