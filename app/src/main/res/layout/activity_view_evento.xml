@@ -191,14 +191,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:background="@color/corbarras">
 
         <ImageView
             android:id="@+id/guardioesalistados"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:foreground="@color/corbarras"
-            android:src="@drawable/backgroud"/>
+            android:foreground="@color/corbarras"/>
 
         <TextView
             android:id="@+id/textguardioesalistados"

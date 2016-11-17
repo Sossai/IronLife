@@ -20,14 +20,14 @@
         android:id="@+id/barrarelativeeventos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imagemtopoeventos">
+        android:layout_below="@+id/imagemtopoeventos"
+        android:background="@color/corbarras">
 
         <ImageView
             android:id="@+id/barranews"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:foreground="@color/corbarras"
-            android:src="@drawable/backgroud" />
+            android:foreground="@color/corbarras"/>
 
         <TextView
             android:id="@+id/textbarraeventos"

@@ -19,14 +19,14 @@ android {
     buildToolsVersion "23.0.3"
 
     //include this line for your android applications
-    //applicationVariants.all { variant -> renameArtifact(variant, defaultConfig) }
+    applicationVariants.all { variant -> renameArtifact(variant, defaultConfig) }
 
     defaultConfig {
         applicationId "dev42.ironlife"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.1"
+        versionCode 4
+        versionName "1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
