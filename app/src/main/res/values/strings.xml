@@ -6,5 +6,6 @@
     <string name="barra_news">News</string>
     <string name="barra_eventos">Eventos</string>
     <string name="barra_alistados">Guardiões Alistados</string>
+    <string name="barra_tutoriais">Tutoriais</string>
     <string name="APIKey">e129b13b149b4ef3ae55a1d1709f49aa</string>
 </resources>

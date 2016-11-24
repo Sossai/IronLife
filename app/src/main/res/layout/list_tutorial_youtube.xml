@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundescuro"
+    android:paddingTop="16dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/img_video"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/raid_demo2"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/titulovideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escolinha 1 12 "
+        android:textColor="@color/cortextobranco"
+        android:textSize="22sp"
+        android:layout_alignTop="@id/imagemevento"
+        android:layout_marginLeft="8dp"/>
+</LinearLayout>

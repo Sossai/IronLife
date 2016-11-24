@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     private UsuarioLogadoBung usuarioLogadoBung;
     private final String apiKey = "e129b13b149b4ef3ae55a1d1709f49aa";
     private Integer tipoRetorno;
+    private ProgressBar progressBar;
 
     private Activity activity = this;
     @Override
@@ -43,26 +45,20 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         setContentView(R.layout.activity_main);
 
         Button loginBtn = (Button)findViewById(R.id.btnlogin);
+        progressBar = (ProgressBar)findViewById(R.id.progress_start);
 
         usuarioLogadoBung = new UsuarioLogadoBung(this);
         usuarioLogadoBung.getDadosShared();
 
         //  **  Já tenho o membershipid da bungie   **
         if(!usuarioLogadoBung.getMembershipId().isEmpty()){
-
             //  **  Revalida se pertence ao cla **
             revalidaCla();
-
-//            Intent intent = new Intent(MainActivity.this, EventoActivity.class);
-//            startActivity(intent);
+        }else{
+            progressBar.setVisibility(View.GONE);
+            loginBtn.setVisibility(View.VISIBLE);
         }
 
-/*        login = (EditText)findViewById(R.id.login);
-        senha = (EditText)findViewById(R.id.senha);
-        Button loginBtn = (Button)findViewById(R.id.btnlogin);
-
-        carregaDadosShared();
-*/
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         //  **  Token parar envio do fcm    **
         FirebaseInstanceId.getInstance().getToken();
         //Log.d("EventoActivity", "Token: " + token);
-
-
-
     }
 
     protected void revalidaCla(){
@@ -114,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
 
     @Override
     public void LidaComRetorno(String retorno) {
-
+        progressBar.setVisibility(View.INVISIBLE);
         switch (tipoRetorno){
             case 1:
                 PegaDadosJson pegaDadosJson = new PegaDadosJson(retorno);
@@ -141,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     @Override
     public void LidaComErro(String erro) {
         Log.e("Erro Main", erro);
+        progressBar.setVisibility(View.INVISIBLE);
         switch (tipoRetorno){
             case 1:
                 Toast.makeText(this, "Lamento Guardião, não foi possível validar seu clã.", Toast.LENGTH_LONG).show();

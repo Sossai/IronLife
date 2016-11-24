@@ -2,6 +2,7 @@ package dev42.ironlife.adapters;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import dev42.ironlife.R;
@@ -42,6 +45,11 @@ public class EventoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = activity.getLayoutInflater();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar c = Calendar.getInstance();
+        String dtHoje = sdf.format(c.getTime());
+
+
         Evento evento = listEventos.get(position);
         ViewHolder holder;
         if(convertView == null){
@@ -53,12 +61,25 @@ public class EventoAdapter extends BaseAdapter {
             holder = (ViewHolder)layout.getTag();
         }
 
+        Log.e("Data", dtHoje + " | " + evento.getDataInicio());
+
         holder.titulo.setText(evento.getTitulo());
-        //String txt = "Inicio : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
-        holder.inicio.setText(evento.getDataInicio());
+
+        //  **  Evento programado para hoje **
+        if(dtHoje.equals(evento.getDataInicio())) {
+            holder.inicio.setText("Hoje");
+            holder.inicio.setTextColor(ContextCompat.getColor(activity, R.color.verde));
+        }
+        else
+            holder.inicio.setText(evento.getDataInicio());
+
         holder.hrinicio.setText(evento.getHoraInicio().toString());
-        //txt = "Fim : " + evento.getDataInicio() + " - " + evento.getHoraInicio();
-        holder.fim.setText(evento.getDataEncerramento());
+
+        if(dtHoje.equals(evento.getDataEncerramento()))
+            holder.fim.setText("Hoje");
+        else
+            holder.fim.setText(evento.getDataEncerramento());
+
         holder.hrfim.setText(evento.getHoraEncerramento().toString());
         //String txt = "Organizador : " + evento.getResponsavel();
         holder.responsavel.setText("Organizador : " + evento.getResponsavel());

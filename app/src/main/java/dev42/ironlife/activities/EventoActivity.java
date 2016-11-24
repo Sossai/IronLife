@@ -33,6 +33,7 @@ import dev42.ironlife.adapters.EventoAdapter;
 import dev42.ironlife.converters.EventoConverter;
 import dev42.ironlife.interfaces.RetornoDelegate;
 import dev42.ironlife.model.Evento;
+import dev42.ironlife.model.TutorialYoutube;
 import dev42.ironlife.model.Usuario;
 import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
@@ -223,19 +224,26 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
+        Intent intent;
         switch (item.getItemId())
         {
+            case R.id.tutoriais_youtube:
+                intent = new Intent(EventoActivity.this, TutorialYoutubeActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.logout:
                 usuarioLogadoBung.deleteDadosShared();
                 finish();
                 //  **  Volta tela delogin  **
-                Intent intent = new Intent(EventoActivity.this, MainActivity.class);
+                intent = new Intent(EventoActivity.this, MainActivity.class);
                 startActivity(intent);
                 return false;
-            default:
-                return super.onOptionsItemSelected(item);
+
+//            default:
+//                return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
