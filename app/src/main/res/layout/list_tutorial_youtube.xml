@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@color/backgroundescuro"
     android:paddingTop="16dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
 
     <ImageView
         android:id="@+id/img_video"
@@ -13,7 +15,7 @@
         android:layout_height="60dp"
         android:src="@drawable/raid_demo2"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp" />
+         />
 
     <TextView
         android:id="@+id/titulovideo"
@@ -23,5 +25,12 @@
         android:textColor="@color/cortextobranco"
         android:textSize="22sp"
         android:layout_alignTop="@id/imagemevento"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="8dp"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/link_youtube"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </LinearLayout>

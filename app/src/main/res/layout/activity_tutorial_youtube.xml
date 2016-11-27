@@ -10,7 +10,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/barrarelativeeventos"
+        android:id="@+id/barrarelativeyoutube"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imagemtopoeventos"
@@ -34,4 +34,12 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listViewYoutube"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/barrarelativeyoutube">
+
+    </ListView>
 </RelativeLayout>

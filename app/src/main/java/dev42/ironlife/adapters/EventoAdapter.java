@@ -61,7 +61,7 @@ public class EventoAdapter extends BaseAdapter {
             holder = (ViewHolder)layout.getTag();
         }
 
-        Log.e("Data", dtHoje + " | " + evento.getDataInicio());
+        //Log.e("Data", dtHoje + " | " + evento.getDataInicio());
 
         holder.titulo.setText(evento.getTitulo());
 
