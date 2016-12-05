@@ -28,7 +28,7 @@ public class GetDadosTask extends AsyncTask<Object, Object, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-//        SystemClock.sleep(3000);
+        //SystemClock.sleep(3000);
 
         String resposta = null;
         WebClient webclient;
