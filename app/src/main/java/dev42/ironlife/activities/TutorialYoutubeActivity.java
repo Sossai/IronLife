@@ -1,5 +1,7 @@
 package dev42.ironlife.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.AbsListView;
@@ -51,6 +54,13 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
         listView = (ListView) findViewById(R.id.listViewYoutube);
         frameload = (FrameLayout)findViewById(R.id.frameload);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TutorialYoutube tutorialYoutube = (TutorialYoutube)listTutorialYoutube.get(position);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tutorialYoutube.getLink())));
+            }
+        });
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -65,7 +75,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
                     if(carregarMaisItens == true){
 //                        Log.e("load more", "load");
                         frameload.setVisibility(View.VISIBLE);
-                        carregaLista(ultimoId, palavraBuscada);
+                        carregaLista(ultimoId, mSearchView.getQuery().toString());
                         carregarMaisItens = false;
                     }
                 }
@@ -73,26 +83,22 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
         });
 
         frameload.setVisibility(View.VISIBLE);
-        carregaLista(ultimoId, palavraBuscada);
+        carregaLista(ultimoId, "");
         swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
         swipe.setOnRefreshListener(this);
 
     }
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_tutotial_youtube, menu);
         super.onCreateOptionsMenu(menu);
 
         //Pega o Componente.
-        mSearchView = (SearchView) menu.findItem(R.id.search)
-                .getActionView();
+        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
         //Define um texto de ajuda:
         mSearchView.setQueryHint("Titulo ?");
         mSearchView.setSubmitButtonEnabled(true);
-
-        // exemplos de utilização:
-//        mSearchView.setOnQueryTextListener(this);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -103,7 +109,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
                 listTutorialYoutube.clear();
                 listView.setAdapter(null);
 //                carregarMaisItens = false;
-                carregaLista(0, palavraBuscada);
+                carregaLista(0, mSearchView.getQuery().toString());
                 //adapter.notifyDataSetChanged();
                 return false;
             }
@@ -116,7 +122,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
 
         return true;
     }
-*/
+
     protected void carregaLista(Integer ultimoId, String palavraBuscada){
         String url = getString(R.string.url_lista_tutoriais_youtube);
         url += ultimoId;
@@ -192,7 +198,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
     public void onRefresh() {
         listTutorialYoutube.clear();
         listView.setAdapter(null);
-        carregaLista(0, "");
+        carregaLista(0, mSearchView.getQuery().toString());
         //adapter.notifyDataSetChanged();
     }
 }

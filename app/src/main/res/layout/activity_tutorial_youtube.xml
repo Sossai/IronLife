@@ -50,7 +50,6 @@
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
     <FrameLayout
         android:id="@+id/frameload"
         android:layout_width="match_parent"
