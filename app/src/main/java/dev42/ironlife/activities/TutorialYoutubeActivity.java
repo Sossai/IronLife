@@ -58,7 +58,8 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TutorialYoutube tutorialYoutube = (TutorialYoutube)listTutorialYoutube.get(position);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tutorialYoutube.getLink())));
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tutorialYoutube.getLink())));
+                Log.e("Click", tutorialYoutube.getTitulo());
             }
         });
 
@@ -103,7 +104,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e("Opa", mSearchView.getQuery().toString());
+                //Log.e("Opa", mSearchView.getQuery().toString());
 
                 palavraBuscada = mSearchView.getQuery().toString();
                 listTutorialYoutube.clear();
@@ -145,26 +146,27 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
 
         //  **  Se não tiver vazio baixou mais itens    **
         if(!listTutorialYoutube.isEmpty()){
-//            Log.e("Baixou mais ?", "sim");
+           // Log.e("Baixou mais ?", "sim");
 
             //        listTutorialYoutube.addAll(converter.converte(retorno));
             ultimoId = listTutorialYoutube.get(listTutorialYoutube.size()-1).getId();
 //            Log.e("Ultimo ID", ultimoId.toString());
 
             if(listView.getAdapter()==null){
-//                Log.e("LidaComRetorno", "insert");
+             //   Log.e("LidaComRetorno", "insert");
                 adapter = new TutorialYoutubeAdapter(listTutorialYoutube, this);
                 listView.setAdapter(adapter);
             }else{
-//                Log.e("LidaComRetorno", "Update");
+               // Log.e("LidaComRetorno", "Update");
                 listTutorialYoutubeAux.addAll(listTutorialYoutube);
                 listTutorialYoutube = listTutorialYoutubeAux;
+                // ?? ok ??
                 adapter.notifyDataSetChanged();
             }
 
             carregarMaisItens = true;
         }//else
-//            Log.e("Baixar mais ?", "NAO!");
+            //Log.e("Baixar mais ?", "NAO!");
 
         frameload.setVisibility(View.GONE);
         this.swipe.setRefreshing(false);

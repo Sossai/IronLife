@@ -2,6 +2,7 @@ package dev42.ironlife.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,6 @@ import dev42.ironlife.model.UsuarioLogadoBung;
 import dev42.ironlife.tasks.GetDadosTask;
 
 public class MainActivity extends AppCompatActivity implements RetornoDelegate {
-//public class MainActivity extends AppCompatActivity {
-
     private EditText login,senha;
     private Usuario usuarioLogado;
     private final String PREF_NOME = "UsuarioShared";
@@ -39,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
     private ProgressBar progressBar;
 
     private Activity activity = this;
+    RetornoDelegate retornoDelegate = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
 
     @Override
     public void LidaComRetorno(String retorno) {
+
+        Log.e("Sucesso Main", retorno);
+
         progressBar.setVisibility(View.INVISIBLE);
         switch (tipoRetorno){
             case 1:

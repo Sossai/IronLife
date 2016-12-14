@@ -69,9 +69,9 @@ public class WebClient {
         try{
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            //connection.setRequestProperty("Accept", "application/json");
-            //connection.setRequestProperty("Content-type", "application/json;charset=utf-8");
+            //connection.setRequestMethod("POST");
+//            connection.setRequestProperty("Accept", "application/json");
+//            connection.setRequestProperty("Content-type", "application/json;charset=utf-8");
             connection.setUseCaches(false);
             connection.setAllowUserInteraction(false);
             connection.setDoInput(true);
@@ -91,6 +91,9 @@ public class WebClient {
             StringBuffer response = new StringBuffer();
             InputStream in = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+//            BufferedReader reader= new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
             String line = "";
             while ((line = reader.readLine()) != null) {
                 response.append(line);

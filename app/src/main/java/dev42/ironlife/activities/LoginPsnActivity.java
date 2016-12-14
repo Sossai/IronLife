@@ -95,6 +95,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     //  ** Nao faço nada até que seja possiverl pegar algum retorno valido no callback do assynctask    **
                     ///Toast.makeText(activity, "Lamento Guardião.", Toast.LENGTH_LONG).show();
                     //finish();
+                    Log.e("Falha cookie", "Falha cookie");
                 }
             }
         });
@@ -118,7 +119,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 {
                     usuarioLogadoBung.setDisplayName(pegaDadosJson.valor("displayName",""));
 
-                    //Log.e("Sucesso ret passo 1", retorno);
+                    Log.e("Sucesso ret passo 1", retorno);
 
                     urlGet = getString(R.string.url_bungie) + "Destiny/SearchDestinyPlayer/2/"+usuarioLogadoBung.getDisplayName().trim() + '/';
                     passo = 2;
@@ -138,7 +139,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 if(pegaDadosJson.valor("membershipId","") != null){
                     usuarioLogadoBung.setMembershipId(pegaDadosJson.valor("membershipId",""));
 
-                    //Log.e("Sucesso ret passo 2-1", usuarioLogadoBung.getMembershipId());
+                    Log.e("Sucesso ret passo 2-1", usuarioLogadoBung.getMembershipId());
 
                     urlGet = getString(R.string.url_bungie) + "User/GetBungieAccount/"+usuarioLogadoBung.getMembershipId() + "/2/";
                     passo = 3;
@@ -151,7 +152,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 break;
             case 3: //  **  Pegou dados dos Grupo
 
-                //Log.e("Sucesso ret passo 3", retorno);
+                Log.e("Sucesso ret passo 3", retorno);
                 pegaDadosJson = new PegaDadosJson(retorno);
 
                 if(pegaDadosJson.valor("groupId","") != null){
@@ -187,7 +188,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
 
                 break;
             case 4:
-//                Log.e("Retorno 4", retorno);
+                Log.e("Retorno 4", retorno);
                 if(retorno.trim().equals("SUCESSO")){
                     usuarioLogadoBung.setDadosShared();
 
@@ -218,6 +219,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
         postDataParams.put("membershipid",usuarioLogadoBung.getMembershipId());
         postDataParams.put("displayname",usuarioLogadoBung.getDisplayName());
 
+        Log.e("Passo 4", usuarioLogadoBung.getMembershipId() + "|" + usuarioLogadoBung.getDisplayName());
         GetDadosTask task = new GetDadosTask(this, url, postDataParams, "POST");
         task.execute();
     }
