@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -218,7 +219,13 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_evento, menu);
+        //  **  No Jelly Bean não mostra menu compactado, sempre deve estar visuvel **
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            getMenuInflater().inflate(R.menu.menu_evento, menu);
+        }else
+            getMenuInflater().inflate(R.menu.menu_evento_show_icon, menu);
+
+//        getMenuInflater().inflate(R.menu.menu_evento, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -1,6 +1,7 @@
 package dev42.ironlife.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,7 +112,12 @@ public class ViewEventoActivity extends AppCompatActivity implements RetornoDele
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_view_evento, menu);
+        //  **  No Jelly Bean não mostra menu compactado, sempre deve estar visuvel **
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            getMenuInflater().inflate(R.menu.menu_view_evento, menu);
+        }else
+            getMenuInflater().inflate(R.menu.menu_view_evento_show_icon, menu);
+
         if(!permiteConvocar){
             menu.getItem(0).setVisible(false);
         }

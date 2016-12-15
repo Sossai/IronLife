@@ -58,8 +58,8 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TutorialYoutube tutorialYoutube = (TutorialYoutube)listTutorialYoutube.get(position);
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tutorialYoutube.getLink())));
-                Log.e("Click", tutorialYoutube.getTitulo());
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(tutorialYoutube.getLink())));
+//                Log.e("LidaComRetorno", "click :" + tutorialYoutube.getTitulo());
             }
         });
 
@@ -71,10 +71,11 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
                 if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount !=0 ){
 
                     if(carregarMaisItens == true){
-//                        Log.e("load more", "load");
+//                        Log.e("LidaComRetorno", "load MORE");
                         frameload.setVisibility(View.VISIBLE);
                         carregaLista(ultimoId, mSearchView.getQuery().toString());
                         carregarMaisItens = false;
@@ -98,13 +99,23 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
         //Pega o Componente.
         mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
         //Define um texto de ajuda:
-        mSearchView.setQueryHint("Titulo ?");
-        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Pesquisar");
+        mSearchView.setIconifiedByDefault(false);
+        //mSearchView.setSubmitButtonEnabled(true);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Log.e("Opa", mSearchView.getQuery().toString());
+
+/*                palavraBuscada = mSearchView.getQuery().toString();
+                listTutorialYoutube.clear();
+                listView.setAdapter(null);
+                carregaLista(0, mSearchView.getQuery().toString());*/
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
 
                 palavraBuscada = mSearchView.getQuery().toString();
                 listTutorialYoutube.clear();
@@ -112,11 +123,7 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
 //                carregarMaisItens = false;
                 carregaLista(0, mSearchView.getQuery().toString());
                 //adapter.notifyDataSetChanged();
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
                 return false;
             }
         });
@@ -139,34 +146,30 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
     public void LidaComRetorno(String retorno) {
 //        Log.e("Sucesso", retorno);
 
-        List<TutorialYoutube> listTutorialYoutubeAux = listTutorialYoutube;
-
         TutorialYoutubeConverter converter = new TutorialYoutubeConverter();
-        listTutorialYoutube = converter.converte(retorno);
+        List<TutorialYoutube> listTutorialYoutubeAux = converter.converte(retorno);
 
         //  **  Se não tiver vazio baixou mais itens    **
-        if(!listTutorialYoutube.isEmpty()){
-           // Log.e("Baixou mais ?", "sim");
+        if(!listTutorialYoutubeAux.isEmpty()){
+//            Log.e("LidaComRetorno", "baixou mais");
 
-            //        listTutorialYoutube.addAll(converter.converte(retorno));
-            ultimoId = listTutorialYoutube.get(listTutorialYoutube.size()-1).getId();
-//            Log.e("Ultimo ID", ultimoId.toString());
+            ultimoId = listTutorialYoutubeAux.get(listTutorialYoutubeAux.size()-1).getId();
+//            Log.e("LidaComRetorno", "Ultimo id"+ultimoId.toString());
 
             if(listView.getAdapter()==null){
-             //   Log.e("LidaComRetorno", "insert");
+//                Log.e("LidaComRetorno", "insert");
+                listTutorialYoutube = listTutorialYoutubeAux;
                 adapter = new TutorialYoutubeAdapter(listTutorialYoutube, this);
                 listView.setAdapter(adapter);
             }else{
-               // Log.e("LidaComRetorno", "Update");
-                listTutorialYoutubeAux.addAll(listTutorialYoutube);
-                listTutorialYoutube = listTutorialYoutubeAux;
-                // ?? ok ??
+//                Log.e("LidaComRetorno", "Update");
+                listTutorialYoutube.addAll(listTutorialYoutubeAux);
                 adapter.notifyDataSetChanged();
             }
 
             carregarMaisItens = true;
         }//else
-            //Log.e("Baixar mais ?", "NAO!");
+//            Log.e("LidaComRetorno", "baixou mais NAO!");
 
         frameload.setVisibility(View.GONE);
         this.swipe.setRefreshing(false);
@@ -198,9 +201,11 @@ public class TutorialYoutubeActivity extends AppCompatActivity implements Retorn
 
     @Override
     public void onRefresh() {
+
         listTutorialYoutube.clear();
         listView.setAdapter(null);
         carregaLista(0, mSearchView.getQuery().toString());
         //adapter.notifyDataSetChanged();
     }
+
 }

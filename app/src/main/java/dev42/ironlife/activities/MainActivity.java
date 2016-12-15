@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements RetornoDelegate {
         //  **  Token parar envio do fcm    **
         FirebaseInstanceId.getInstance().getToken();
         //Log.d("EventoActivity", "Token: " + token);
+
+/*        Float densidade = getResources().getDisplayMetrics().density;
+        Log.e("Densidade", densidade.toString());*/
+
     }
 
     protected void revalidaCla(){
