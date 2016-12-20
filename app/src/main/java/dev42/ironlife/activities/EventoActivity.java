@@ -95,19 +95,6 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
 
         swipe = (SwipeRefreshLayout)findViewById(R.id.swipe);
         swipe.setOnRefreshListener(this);
-
-/*
-
-        Calendar c = Calendar.getInstance();
-        //System.out.println("Current time => " + c.getTime());
-        Log.e("Gettime", c.getTime().toString());
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
-        Log.e("DATA" ,formattedDate);
-*/
-
-/*        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        Log.e("datexxx", date);*/
     }
 
     @Override
@@ -263,6 +250,8 @@ public class EventoActivity extends AppCompatActivity implements RetornoDelegate
             case 1:
                 this.swipe.setRefreshing(false);
                 this.swipe.clearAnimation();
+
+//                Log.e("Retorno", retorno);
 
                 EventoConverter converter = new EventoConverter();
                 eventos = converter.converte(retorno);

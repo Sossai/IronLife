@@ -8,6 +8,7 @@ public class TutorialYoutube {
     private Integer id;
     private String titulo;
     private String link;
+    private String imagem;
 
     public Integer getId() {
         return id;
@@ -31,5 +32,13 @@ public class TutorialYoutube {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }

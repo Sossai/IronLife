@@ -352,8 +352,10 @@ public class AddEventoActivity extends AppCompatActivity implements RetornoDeleg
         switch (tipoRetorno){
             case 1:
                 if(retorno.trim().equals("SUCESSO")){
-                    if(idEvento == null)
-                        Toast.makeText( this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                    if(idEvento == null) {
+                        Toast.makeText(this, "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                        //  **  Enviar FCM  **
+                    }
                     else
                         Toast.makeText( this, "Evento editado com sucesso!", Toast.LENGTH_LONG).show();
                     finish();

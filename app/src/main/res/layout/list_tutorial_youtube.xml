@@ -7,21 +7,34 @@
     android:paddingTop="16dp"
     android:paddingBottom="10dp">
 
-    <ImageView
-        android:id="@+id/img_video"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/raid_demo2"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-         />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_video"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/raid_demo2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
+        <ProgressBar
+            android:id="@+id/progress_video"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+    </RelativeLayout>
+
+
 
     <TextView
         android:id="@+id/titulovideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escolinha 1 12 "
+        android:text="Titulo Video 1"
         android:textColor="@color/cortextobranco"
         android:textSize="18sp"
         android:layout_alignTop="@id/imagemevento"

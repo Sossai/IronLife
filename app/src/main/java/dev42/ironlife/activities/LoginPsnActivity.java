@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.HashMap;
 
 import dev42.ironlife.R;
@@ -119,7 +121,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                 {
                     usuarioLogadoBung.setDisplayName(pegaDadosJson.valor("displayName",""));
 
-                    Log.e("Sucesso ret passo 1", retorno);
+//                    Log.e("Sucesso ret passo 1", retorno);
 
                     urlGet = getString(R.string.url_bungie) + "Destiny/SearchDestinyPlayer/2/"+usuarioLogadoBung.getDisplayName().trim() + '/';
                     passo = 2;
@@ -127,7 +129,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     GetDadosTask task = new GetDadosTask(delegate, urlGet, postDataParams, "GETLOGINAPI" );
                     task.execute();
                 }else
-                    retornaFalha();
+                    retornaFalha("Captura dos dados do usuário na Bungie.");
 
 
                 //Log.e("Nome", ret);
@@ -147,12 +149,12 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     GetDadosTask task = new GetDadosTask(delegate, urlGet, postDataParams, "GETLOGINAPI" );
                     task.execute();
                 }else
-                    retornaFalha();
+                    retornaFalha("Captura do Id do usuário na Bungie:"+ usuarioLogadoBung.getDisplayName().trim());
 
                 break;
             case 3: //  **  Pegou dados dos Grupo
 
-                Log.e("Sucesso ret passo 3", retorno);
+//                Log.e("Sucesso ret passo 3", retorno);
                 pegaDadosJson = new PegaDadosJson(retorno);
 
                 if(pegaDadosJson.valor("groupId","") != null){
@@ -177,18 +179,18 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                             limpaCookies();*/
                         }else{
                             Toast.makeText(this, "Lamento Guardião, apenas membros do clã IRON LIFE são permitidos.", Toast.LENGTH_LONG).show();
-                            retornaFalha();
+                            retornaFalha("");
                         }
                     }else
-                        retornaFalha();
+                        retornaFalha("Captura nome do Clã:" + usuarioLogadoBung.getMembershipId());
                         //Log.e("x","erro2");
                 }else
-                    retornaFalha();
+                    retornaFalha("Captura Id do Clã: " + usuarioLogadoBung.getMembershipId());
                     //Log.e("x","erro");
 
                 break;
             case 4:
-                Log.e("Retorno 4", retorno);
+//                Log.e("Retorno 4", retorno);
                 if(retorno.trim().equals("SUCESSO")){
                     usuarioLogadoBung.setDadosShared();
 
@@ -197,7 +199,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
                     Toast.makeText(this, "Seja bem vindo Guardião.", Toast.LENGTH_LONG).show();
 //                    limpaCookies();
                 }else
-                    retornaFalha();
+                    retornaFalha("Salvar dados no servidor :" + usuarioLogadoBung.getMembershipId());
 
                 break;
         }
@@ -207,7 +209,7 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
     public void LidaComErro(String erro) {
         Log.e("Erro" + passo, erro);
         finish();
-        retornaFalha();
+        retornaFalha("Falha retorno.");
 //        Intent intent = new Intent(LoginPsnActivity.this, MainActivity.class);
 //        startActivity(intent);
     }
@@ -224,10 +226,11 @@ public class LoginPsnActivity extends AppCompatActivity implements RetornoDelega
         task.execute();
     }
 
-    private void retornaFalha(){
+    private void retornaFalha(String falha){
         limpaCookies();
         //usuarioLogadoBung.deleteDadosShared();
         Toast.makeText(this, "Lamento Guadião, não foi possível validar seus dados.", Toast.LENGTH_LONG).show();
+        FirebaseCrash.report(new Exception(falha));
         finish();
         Intent intent = new Intent(LoginPsnActivity.this, MainActivity.class);
         startActivity(intent);

@@ -44,7 +44,7 @@ public class TutorialYoutubeAdapter extends BaseAdapter {
         LayoutInflater inflater = activity.getLayoutInflater();
         TutorialYoutube tutorialYoutube = listYoutube.get(position);
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if(convertView == null){
             layout = inflater.inflate(R.layout.list_tutorial_youtube, parent, false);
             holder = new ViewHolder(layout);
@@ -58,18 +58,29 @@ public class TutorialYoutubeAdapter extends BaseAdapter {
         holder.link.setText(tutorialYoutube.getLink());
 
         Picasso.with(this.activity)
-                .load(geraThumbYoutube(tutorialYoutube.getLink()))
-                .into(holder.imagem);
+                //.load(geraThumbYoutube(tutorialYoutube.getLink()))
+                .load(tutorialYoutube.getImagem().toString())
+                .into(holder.imagem, new Callback() {
+            @Override
+            public void onSuccess() {
+                holder.progressBar.setVisibility(GONE);
+            }
+
+            @Override
+            public void onError() {
+                holder.progressBar.setVisibility(GONE);
+            }
+        });
         return layout;
     }
 
-    protected String geraThumbYoutube(String linkYoutube){
+/*    protected String geraThumbYoutube(String linkYoutube){
         Integer pos = linkYoutube.indexOf("watch?v=");
         String codigo = linkYoutube.substring(pos,linkYoutube.length()).replace("watch?v=","");
         String thumbYoutube = "http://img.youtube.com/vi/" + codigo + "/0.jpg";
 
         return thumbYoutube;
-    }
+    }*/
 
     @Override
     public int getCount() {
@@ -90,11 +101,13 @@ public class TutorialYoutubeAdapter extends BaseAdapter {
         ImageView imagem;
         TextView titulo;
         TextView link;
+        ProgressBar progressBar;
 
         public ViewHolder(View view){
             this.imagem = (ImageView)view.findViewById(R.id.img_video);
             this.titulo = (TextView)view.findViewById(R.id.titulovideo);
             this.link = (TextView)view.findViewById(R.id.link_youtube);
+            this.progressBar = (ProgressBar)view.findViewById(R.id.progress_video);
         }
     }
 

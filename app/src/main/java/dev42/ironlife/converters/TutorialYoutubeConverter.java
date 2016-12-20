@@ -32,6 +32,7 @@ public class TutorialYoutubeConverter {
                 tutorialYoutube.setId(Integer.parseInt(jsonEvento.getString("id")));
                 tutorialYoutube.setTitulo(jsonEvento.getString("titulo"));
                 tutorialYoutube.setLink(jsonEvento.getString("link"));
+                tutorialYoutube.setImagem(jsonEvento.getString("imagem"));
 
                 listTutorialYoutube.add(tutorialYoutube);
             }
